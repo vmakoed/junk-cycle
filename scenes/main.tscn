@@ -1,0 +1,321 @@
+[gd_scene load_steps=3 format=3 uid="uid://duqbpuyr7odl0"]
+
+[ext_resource type="Script" uid="uid://ypvni8lhif4t" path="res://scripts/main.gd" id="1_0wfyh"]
+[ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/label.tres" id="1_o5qli"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0wfyh")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="DistanceContainer" type="Control" parent="Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+
+[node name="DistanceProgressBar" type="ProgressBar" parent="Control/MarginContainer/VBoxContainer/DistanceContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+show_percentage = false
+
+[node name="DistanceLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/DistanceContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_o5qli")
+text = "Distance: 0/2000m"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="ResourcesPanel" type="Panel" parent="Control/MarginContainer/VBoxContainer/InfoContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer/ResourcesPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+
+[node name="ResourcesContainer" type="GridContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 2
+
+[node name="BatteryTitle" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+theme = ExtResource("1_o5qli")
+text = "Battery:"
+vertical_alignment = 1
+
+[node name="BatteryLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1_o5qli")
+text = "100%"
+vertical_alignment = 1
+
+[node name="TurnsTitle" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+theme = ExtResource("1_o5qli")
+text = "Turn:"
+vertical_alignment = 1
+
+[node name="TurnsLabel" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1_o5qli")
+text = "0/20"
+vertical_alignment = 1
+
+[node name="CardsContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Panel" type="Panel" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CurrentTurnInfo" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurrentTurnTitle" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme = ExtResource("1_o5qli")
+text = "Turn name"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Control" type="Control" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Turn image"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrentTurnDescription" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_vertical = 8
+text = "Turn description"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NextTurnsContainer" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="NextTurnPanel" type="Panel" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Next turn: "
+
+[node name="NextTurnTitle" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "TURN NAME"
+
+[node name="NextTurnPanel2" type="Panel" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "In 2 turns:"
+
+[node name="NextTurnTitle2" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "TURN NAME"
+
+[node name="NextTurnPanel3" type="Panel" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel3/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "In 3 turns:"
+
+[node name="NextTurnTitle3" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel3/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+text = "TURN NAME"
+
+[node name="DeckPanel" type="Panel" parent="Control/MarginContainer/VBoxContainer/InfoContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/InfoContainer/DeckPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_o5qli")
+text = "No item equipped"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionsContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 168)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 24
+
+[node name="OptionsButtonMargin2" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Button" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/OptionsButtonMargin2"]
+layout_mode = 2
+theme = ExtResource("1_o5qli")
+disabled = true
+text = "Options"
+
+[node name="Control" type="Control" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PedalButton" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_o5qli")
+text = "PEDAL"
+
+[node name="BoostButton" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_o5qli")
+text = "BOOST
+"
+
+[node name="Control3" type="Control" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ConfirmButtonMargin" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Button" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/ConfirmButtonMargin"]
+layout_mode = 2
+theme = ExtResource("1_o5qli")
+disabled = true
+text = "Confrm"
+
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ActionsContainer/PedalButton" to="." method="_on_pedal_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ActionsContainer/BoostButton" to="." method="_on_boost_button_pressed"]
