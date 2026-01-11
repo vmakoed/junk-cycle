@@ -7,7 +7,6 @@ signal toggled_child_changed
 var toggled_child: Node
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	child_entered_tree.connect(_setup_toggle_signals)
 

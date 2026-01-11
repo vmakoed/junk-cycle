@@ -257,12 +257,12 @@ func _initialize_distance_progress_bar() -> void:
 
 func _setup_cards() -> void:
 	for item in Item.values():
-		var scene := load("res://scenes/card.tscn")
-		var node := scene.instantiate() as Card
+		var scene := load("res://scenes/toggleable_card.tscn")
+		var node := scene.instantiate() as ToggleableCard
 		items_container.add_child(node)
-		node.title_text = ITEM_TITLES[item]
-		node.description_text = ITEM_DESCRIPTIONS[item]
-		node.refresh()
+		node.card.title_text = ITEM_TITLES[item]
+		node.card.description_text = ITEM_DESCRIPTIONS[item]
+		node.card.refresh()
 
 
 func _setup_card_selection_events() -> void:
@@ -298,8 +298,6 @@ func _refresh_next_turns() -> void:
 
 
 func _refresh_selected_item_card() -> void:
-	print(selected_item)
-	print(ITEM_DESCRIPTIONS)
 	selected_item_card.title_text = ITEM_TITLES[selected_item]
 	selected_item_card.description_text = ITEM_DESCRIPTIONS[selected_item]
 	selected_item_card.refresh()
@@ -376,7 +374,7 @@ func _on_confirm_button_pressed() -> void:
 	_resolve_turn(selected_action)
 
 
-func _on_item_selection_changed(item: Card) -> void:
+func _on_item_selection_changed(item: ToggleableCard) -> void:
 	selected_item = Item[Item.keys()[item.get_index()]]
 
 
