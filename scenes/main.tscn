@@ -1,7 +1,69 @@
-[gd_scene load_steps=3 format=3 uid="uid://duqbpuyr7odl0"]
+[gd_scene load_steps=9 format=3 uid="uid://duqbpuyr7odl0"]
 
 [ext_resource type="Script" uid="uid://ypvni8lhif4t" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/label.tres" id="1_o5qli"]
+
+[sub_resource type="Animation" id="Animation_sugp2"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_0wfyh"]
+resource_name = "toggle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(120, 48), Vector2(120, 168)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sugp2"]
+_data = {
+&"RESET": SubResource("Animation_sugp2"),
+&"toggle": SubResource("Animation_0wfyh")
+}
+
+[sub_resource type="Animation" id="Animation_jyhfs"]
+resource_name = "toggle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(120, 48), Vector2(120, 168)]
+}
+
+[sub_resource type="Animation" id="Animation_tbgi4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(120, 48)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tefeu"]
+_data = {
+&"RESET": SubResource("Animation_tbgi4"),
+&"toggle": SubResource("Animation_jyhfs")
+}
 
 [node name="Main" type="Node"]
 script = ExtResource("1_0wfyh")
@@ -275,9 +337,8 @@ theme_override_constants/margin_bottom = 24
 
 [node name="Button" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/OptionsButtonMargin2"]
 layout_mode = 2
-theme = ExtResource("1_o5qli")
 disabled = true
-text = "Options"
+text = "OPTIONS"
 
 [node name="Control" type="Control" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
 layout_mode = 2
@@ -285,20 +346,59 @@ size_flags_horizontal = 3
 
 [node name="PedalButton" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
 size_flags_vertical = 8
 theme = ExtResource("1_o5qli")
-text = "PEDAL"
+toggle_mode = true
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/PedalButton"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_right = 37.5
+offset_bottom = 40.0
+grow_horizontal = 2
+text = "Pedal"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/PedalButton"]
+libraries = {
+&"": SubResource("AnimationLibrary_sugp2")
+}
 
 [node name="BoostButton" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
 size_flags_vertical = 8
 theme = ExtResource("1_o5qli")
-text = "BOOST
-"
+toggle_mode = true
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/BoostButton"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_right = 37.5
+offset_bottom = 40.0
+grow_horizontal = 2
+text = "Boost"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/BoostButton"]
+libraries = {
+&"": SubResource("AnimationLibrary_tefeu")
+}
 
 [node name="Control3" type="Control" parent="Control/MarginContainer/VBoxContainer/ActionsContainer"]
 layout_mode = 2
@@ -311,11 +411,12 @@ size_flags_horizontal = 8
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Button" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/ConfirmButtonMargin"]
+[node name="ConfirmButton" type="Button" parent="Control/MarginContainer/VBoxContainer/ActionsContainer/ConfirmButtonMargin"]
+unique_name_in_owner = true
 layout_mode = 2
-theme = ExtResource("1_o5qli")
 disabled = true
-text = "Confrm"
+text = "CONFIRM"
 
-[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ActionsContainer/PedalButton" to="." method="_on_pedal_button_pressed"]
-[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ActionsContainer/BoostButton" to="." method="_on_boost_button_pressed"]
+[connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ActionsContainer/PedalButton" to="." method="_on_pedal_button_toggled"]
+[connection signal="toggled" from="Control/MarginContainer/VBoxContainer/ActionsContainer/BoostButton" to="." method="_on_boost_button_toggled"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ActionsContainer/ConfirmButtonMargin/ConfirmButton" to="." method="_on_confirm_button_pressed"]

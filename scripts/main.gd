@@ -55,6 +55,7 @@ var distance_per_pedal : int
 var distance_per_boost : int
 var pedal_enabled : bool : set = _set_pedal_enabled
 var boost_enabled : bool : set = _set_boost_enabled
+var selected_action: set = _set_selected_action
 
 
 var turns : Array[Turn] = [
@@ -83,13 +84,22 @@ var turns : Array[Turn] = [
 
 @onready var distance_label : Label = %DistanceLabel
 @onready var battery_label : Label = %BatteryLabel
-@onready var pedal_button : Button = %PedalButton
-@onready var boost_button : Button = %BoostButton
 @onready var turns_label : Label = %TurnsLabel
 @onready var distance_progress_bar : ProgressBar = %DistanceProgressBar
 @onready var current_turn_title : Label = %CurrentTurnTitle
 @onready var current_turn_description : Label= %CurrentTurnDescription
 @onready var next_turn_titles : Array[Label] = [%NextTurnTitle, %NextTurnTitle2, %NextTurnTitle3]
+@onready var confirm_button: Button = %ConfirmButton
+
+@onready var action_buttons: Dictionary[Action, Button] = {
+	Action.PEDAL: %PedalButton,
+	Action.BOOST: %BoostButton
+} 
+
+@onready var action_animation_players : Dictionary[Action, AnimationPlayer] = {
+	Action.PEDAL: action_buttons[Action.PEDAL].find_child("AnimationPlayer"),
+	Action.BOOST: action_buttons[Action.BOOST].find_child("AnimationPlayer")
+}
 
 
 func _ready() -> void:
@@ -111,7 +121,6 @@ func _set_current_distance(new_value: int) -> void:
 
 func _set_current_battery(new_value: int) -> void:
 	current_battery = clamp(new_value, BATTERY_MIN, BATTERY_MAX)
-
 	if (current_battery < BATTERY_DRAIN_PER_BOOST):
 		boost_enabled = false
 	else:
@@ -134,12 +143,21 @@ func _set_current_turn(new_value: int) -> void:
 
 func _set_pedal_enabled(new_value: bool) -> void:
 	pedal_enabled = new_value
-	pedal_button.disabled = not pedal_enabled
+	action_buttons[Action.PEDAL].disabled = not pedal_enabled
 
 
 func _set_boost_enabled(new_value: bool) -> void:
 	boost_enabled = new_value
-	boost_button.disabled = not boost_enabled
+
+	if not boost_enabled && selected_action == Action.BOOST:
+		action_buttons[Action.BOOST].button_pressed = false
+
+	action_buttons[Action.BOOST].disabled = not boost_enabled
+
+	
+func _set_selected_action(new_value) -> void:
+	selected_action = new_value
+	confirm_button.disabled = new_value == null
 
 
 func _refresh_distance_label() -> void:
@@ -203,6 +221,7 @@ func _on_goal_reached() -> void:
 
 
 func _on_final_turn_played() -> void:
+	_assign_selected_action(selected_action, false)
 	pedal_enabled = false
 	boost_enabled = false
 	
@@ -218,9 +237,36 @@ func _resolve_turn(movement: Action) -> void:
 	current_turn += TURNS_PER_MOVEMENT
 
 
-func _on_pedal_button_pressed() -> void:
-	_resolve_turn(Action.PEDAL)
+func _play_action_button_animation(action: Action, toggled_on: bool) -> void:
+	if toggled_on:
+		action_animation_players[action].play("toggle")
+	else:
+		action_animation_players[action].play_backwards("toggle")
 
 
-func _on_boost_button_pressed() -> void:
-	_resolve_turn(Action.BOOST)
+func _assign_selected_action(action: Action, toggled_on: bool) -> void:
+	if toggled_on:
+		selected_action = action
+	elif selected_action == action:
+		selected_action = null
+
+
+func _refresh_other_buttons(another_action: Action, toggled_on: bool) -> void:
+	if toggled_on && action_buttons[another_action].button_pressed:
+		action_buttons[another_action].button_pressed = false
+
+
+func _on_pedal_button_toggled(toggled_on: bool) -> void:
+	_assign_selected_action(Action.PEDAL, toggled_on)
+	_refresh_other_buttons(Action.BOOST, toggled_on)
+	_play_action_button_animation(Action.PEDAL, toggled_on)
+
+
+func _on_boost_button_toggled(toggled_on: bool) -> void:
+	_assign_selected_action(Action.BOOST, toggled_on)
+	_refresh_other_buttons(Action.PEDAL, toggled_on)
+	_play_action_button_animation(Action.BOOST, toggled_on)
+
+
+func _on_confirm_button_pressed() -> void:
+	_resolve_turn(selected_action)
