@@ -20,20 +20,33 @@ const TURNS_PER_MOVEMENT = 1
 
 enum Turn { CLEAR, ICE, HILL, TOURIST }
 enum Action { PEDAL, BOOST }
+enum Item { HAIR_DRYER, FIRE_ALARM, BLENDER_MOTOR }
 
 
-const turn_titles : Dictionary[Turn, String] = {
+const TURN_TITLES : Dictionary[Turn, String] = {
 	Turn.CLEAR: "Clear road",
-	Turn.ICE: "Black ice",
+	Turn.ICE: "Icy road",
 	Turn.HILL: "Hill",
 	Turn.TOURIST: "Tourist"
 }
 
-const turn_descriptions : Dictionary[Turn, String] = {
+const TURN_DESCRIPTIONS : Dictionary[Turn, String] = {
 	Turn.CLEAR: "A biker's dream! Continue as usual.",
 	Turn.ICE: "Frozen precipitation. You will slip if you boost and move zero distance.",
 	Turn.HILL: "Too many leg days skipped! Pedalling moves half the usual distance.",
 	Turn.TOURIST: "Tourist is approaching! Speed up or wait for them to cross. Pedalling moves zero distance."
+}
+
+const ITEM_TITLES: Dictionary[Item, String] = {
+	Item.HAIR_DRYER: "Hair dryer",
+	Item.FIRE_ALARM: "Fire alarm",
+	Item.BLENDER_MOTOR: "Blender motor"
+}
+
+const ITEM_DESCRIPTIONS: Dictionary[Item, String] = {
+	Item.HAIR_DRYER: "BOOST through ICE without penalties",
+	Item.FIRE_ALARM: "PEDAL through TOURIST without penalties",
+	Item.BLENDER_MOTOR: "PEDAL through HILL without penalties"
 }
 
 const distances_per_pedal: Dictionary[Turn, int] = {
@@ -56,13 +69,14 @@ const BATTERY_DRAIN_PER_ACTION: Dictionary[Action, int] = {
 }
 
 
-var current_distance : int : set = _set_current_distance  
-var current_battery : int : set = _set_current_battery
-var current_turn : int : set = _set_current_turn
-var pedal_enabled : bool : set = _set_pedal_enabled
-var boost_enabled : bool : set = _set_boost_enabled
+var current_distance: int: set = _set_current_distance  
+var current_battery: int: set = _set_current_battery
+var current_turn: int: set = _set_current_turn
+var pedal_enabled: bool: set = _set_pedal_enabled
+var boost_enabled: bool: set = _set_boost_enabled
 var selected_action: set = _set_selected_action
-var distance_per_action : Dictionary[Action, int]
+var selected_item: set = _set_selected_item
+var distance_per_action: Dictionary[Action, int]
 
 
 var turns : Array[Turn] = [
@@ -90,16 +104,22 @@ var turns : Array[Turn] = [
 
 
 @onready var game_start_container: PanelContainer = %GameStartContainer
+@onready var item_selection_container: PanelContainer = %ItemSelectionContainer
 @onready var level_container: PanelContainer = %LevelContainer
 @onready var game_end_container: PanelContainer = %GameEndContainer
+
+@onready var items_container: BoxContainer = %ItemsContainer
+
 @onready var distance_label: Label = %DistanceLabel
 @onready var battery_label: Label = %BatteryLabel
 @onready var turns_label: Label = %TurnsLabel
 @onready var distance_progress_bar: ProgressBar = %DistanceProgressBar
 @onready var current_turn_title: Label = %CurrentTurnTitle
 @onready var current_turn_description: Label= %CurrentTurnDescription
-@onready var next_turn_titles: Array[Label] = [%NextTurnTitle, %NextTurnTitle2, %NextTurnTitle3]
+@onready var next_TURN_TITLES: Array[Label] = [%NextTurnTitle, %NextTurnTitle2, %NextTurnTitle3]
+@onready var selected_item_card: Card = %SelectedItemCard
 @onready var confirm_button: Button = %ConfirmButton
+
 @onready var game_end_label: Label = %GameEndLabel
 
 
@@ -136,6 +156,8 @@ var turns : Array[Turn] = [
 
 func _ready() -> void:
 	_initialize_distance_progress_bar()
+	_setup_cards()
+	_setup_card_selection_events()
 	_reset_state()
 
 
@@ -193,6 +215,11 @@ func _set_selected_action(new_value) -> void:
 	confirm_button.disabled = new_value == null
 
 
+func _set_selected_item(new_value) -> void:
+	selected_item = new_value
+	_refresh_selected_item_card()
+
+
 func _reset_state() -> void:
 	current_distance = DISTANCE_MIN
 	current_battery = BATTERY_MAX
@@ -228,13 +255,27 @@ func _initialize_distance_progress_bar() -> void:
 	distance_progress_bar.max_value = DISTANCE_GOAL
 
 
+func _setup_cards() -> void:
+	for item in Item.values():
+		var scene := load("res://scenes/card.tscn")
+		var node := scene.instantiate() as Card
+		items_container.add_child(node)
+		node.title_text = ITEM_TITLES[item]
+		node.description_text = ITEM_DESCRIPTIONS[item]
+		node.refresh()
+
+
+func _setup_card_selection_events() -> void:
+	items_container.toggled_child_changed.connect(_on_item_selection_changed)
+
+
 func _refresh_distance_progress_bar() -> void:
 	distance_progress_bar.value = current_distance
 
 
 func _refresh_turn_info() -> void:
-	current_turn_title.text = turn_titles[turns[current_turn]]
-	current_turn_description.text = turn_descriptions[turns[current_turn]]
+	current_turn_title.text = TURN_TITLES[turns[current_turn]]
+	current_turn_description.text = TURN_DESCRIPTIONS[turns[current_turn]]
 
 
 func _refresh_action_info() -> void:
@@ -246,13 +287,22 @@ func _refresh_action_info() -> void:
 			{ "battery_change": BATTERY_DRAIN_PER_ACTION[action] }
 		)
 
+
 func _refresh_next_turns() -> void:
-	for next_turn_difference in next_turn_titles.size():
+	for next_turn_difference in next_TURN_TITLES.size():
 		var next_turn := current_turn + 1 + next_turn_difference
 		if next_turn >= turns.size():
-			next_turn_titles[next_turn_difference].text = ""
+			next_TURN_TITLES[next_turn_difference].text = ""
 		else:
-			next_turn_titles[next_turn_difference].text = turn_titles[turns[next_turn]]
+			next_TURN_TITLES[next_turn_difference].text = TURN_TITLES[turns[next_turn]]
+
+
+func _refresh_selected_item_card() -> void:
+	print(selected_item)
+	print(ITEM_DESCRIPTIONS)
+	selected_item_card.title_text = ITEM_TITLES[selected_item]
+	selected_item_card.description_text = ITEM_DESCRIPTIONS[selected_item]
+	selected_item_card.refresh()
 
 
 func _apply_turn_effects() -> void:
@@ -326,17 +376,26 @@ func _on_confirm_button_pressed() -> void:
 	_resolve_turn(selected_action)
 
 
-func _on_restart_button_pressed() -> void:
-	_reset_state()
-	game_end_container.hide()
+func _on_item_selection_changed(item: Card) -> void:
+	selected_item = Item[Item.keys()[item.get_index()]]
 
 
 func _on_start_button_pressed() -> void:
 	game_start_container.hide()
+	item_selection_container.show()
+
+
+func _on_item_confirmed_button_pressed() -> void:
+	item_selection_container.hide()
 	level_container.show()
+
+
+func _on_restart_button_pressed() -> void:
+	_reset_state()
+	game_end_container.hide()
+	item_selection_container.show()
 
 
 func _on_quit_button_pressed() -> void:
 	game_end_container.hide()
-	level_container.hide()
 	game_start_container.show()
