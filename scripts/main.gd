@@ -4,13 +4,14 @@ extends Node
 const DISTANCE_LABEL_TEXT = "Distance: {current_distance}/{distance_goal}m"
 const BATTERY_LABEL_TEXT = "{current_battery}%"
 const TURNS_LABEL_TEXT = "{current_turn}/{total_turns}"
+const ACTION_INFO_DISTANCE_TEXT = "+{distance_change}m dist."
+const ACTION_INFO_BATTERY_TEXT = "-{battery_change}% batt."
 
 
 const DISTANCE_MIN = 0
 const DISTANCE_GOAL = 1500
 const BATTERY_MAX = 100
 const BATTERY_MIN = 0
-const BATTERY_DRAIN_PER_BOOST = 10
 const TURNS_MIN = 0
 const TURNS_PER_MOVEMENT = 1
 
@@ -47,15 +48,19 @@ const distances_per_boost: Dictionary[Turn, int] = {
 	Turn.TOURIST: 100
 }
 
+const BATTERY_DRAIN_PER_ACTION: Dictionary[Action, int] = {
+	Action.PEDAL: 0,
+	Action.BOOST: 10
+}
+
 
 var current_distance : int : set = _set_current_distance  
 var current_battery : int : set = _set_current_battery
 var current_turn : int : set = _set_current_turn
-var distance_per_pedal : int
-var distance_per_boost : int
 var pedal_enabled : bool : set = _set_pedal_enabled
 var boost_enabled : bool : set = _set_boost_enabled
 var selected_action: set = _set_selected_action
+var distance_per_action : Dictionary[Action, int]
 
 
 var turns : Array[Turn] = [
@@ -96,9 +101,29 @@ var turns : Array[Turn] = [
 	Action.BOOST: %BoostButton
 } 
 
+@onready var action_info_containers: Dictionary[Action, PanelContainer] = {
+	Action.PEDAL: %PedalInfo,
+	Action.BOOST: %BoostInfo
+}
+
 @onready var action_animation_players : Dictionary[Action, AnimationPlayer] = {
 	Action.PEDAL: action_buttons[Action.PEDAL].find_child("AnimationPlayer"),
 	Action.BOOST: action_buttons[Action.BOOST].find_child("AnimationPlayer")
+}
+
+@onready var info_animation_players : Dictionary[Action, AnimationPlayer] = {
+	Action.PEDAL: action_info_containers[Action.PEDAL].find_child("AnimationPlayer"),
+	Action.BOOST: action_info_containers[Action.BOOST].find_child("AnimationPlayer")
+}
+
+@onready var distance_labels : Dictionary[Action, Label] = {
+	Action.PEDAL: action_info_containers[Action.PEDAL].find_child("DistanceLabel"),
+	Action.BOOST: action_info_containers[Action.BOOST].find_child("DistanceLabel")
+}
+
+@onready var battery_labels : Dictionary[Action, Label] = {
+	Action.PEDAL: action_info_containers[Action.PEDAL].find_child("BatteryLabel"),
+	Action.BOOST: action_info_containers[Action.BOOST].find_child("BatteryLabel")
 }
 
 
@@ -114,19 +139,18 @@ func _set_current_distance(new_value: int) -> void:
 
 	_refresh_distance_label()
 	_refresh_distance_progress_bar()
-
-	if current_distance == DISTANCE_GOAL:
-		_on_goal_reached()
+	if _is_goal_reached(): _on_goal_reached()
 
 
 func _set_current_battery(new_value: int) -> void:
 	current_battery = clamp(new_value, BATTERY_MIN, BATTERY_MAX)
-	if (current_battery < BATTERY_DRAIN_PER_BOOST):
+	_refresh_battery_label()
+
+	if _is_goal_reached(): return
+	if (current_battery < BATTERY_DRAIN_PER_ACTION[Action.BOOST]):
 		boost_enabled = false
 	else:
 		boost_enabled = true
-
-	_refresh_battery_label()
 
 
 func _set_current_turn(new_value: int) -> void:
@@ -138,12 +162,16 @@ func _set_current_turn(new_value: int) -> void:
 		
 	_refresh_turn_label()
 	_refresh_turn_info()
+	_refresh_action_info()
 	_refresh_next_turns()
 
 
 func _set_pedal_enabled(new_value: bool) -> void:
 	pedal_enabled = new_value
 	action_buttons[Action.PEDAL].disabled = not pedal_enabled
+
+	if not pedal_enabled && selected_action == Action.PEDAL:
+		action_buttons[Action.PEDAL].button_pressed = false
 
 
 func _set_boost_enabled(new_value: bool) -> void:
@@ -158,6 +186,10 @@ func _set_boost_enabled(new_value: bool) -> void:
 func _set_selected_action(new_value) -> void:
 	selected_action = new_value
 	confirm_button.disabled = new_value == null
+
+
+func _is_goal_reached() -> bool:
+	return current_distance == DISTANCE_GOAL
 
 
 func _refresh_distance_label() -> void:
@@ -194,6 +226,15 @@ func _refresh_turn_info() -> void:
 	current_turn_description.text = turn_descriptions[turns[current_turn]]
 
 
+func _refresh_action_info() -> void:
+	for action in Action.values():
+		distance_labels[action].text = ACTION_INFO_DISTANCE_TEXT.format(
+			{ "distance_change": distance_per_action[action] }
+		)
+		battery_labels[action].text = ACTION_INFO_BATTERY_TEXT.format(
+			{ "battery_change": BATTERY_DRAIN_PER_ACTION[action] }
+		)
+
 func _refresh_next_turns() -> void:
 	for next_turn_difference in next_turn_titles.size():
 		var next_turn := current_turn + 1 + next_turn_difference
@@ -204,8 +245,8 @@ func _refresh_next_turns() -> void:
 
 
 func _apply_turn_effects() -> void:
-	distance_per_pedal = distances_per_pedal[turns[current_turn]]
-	distance_per_boost = distances_per_boost[turns[current_turn]]
+	distance_per_action[Action.PEDAL] = distances_per_pedal[turns[current_turn]]
+	distance_per_action[Action.BOOST] = distances_per_boost[turns[current_turn]]
 
 
 func _on_out_of_turns() -> void:
@@ -221,7 +262,6 @@ func _on_goal_reached() -> void:
 
 
 func _on_final_turn_played() -> void:
-	_assign_selected_action(selected_action, false)
 	pedal_enabled = false
 	boost_enabled = false
 	
@@ -229,10 +269,10 @@ func _on_final_turn_played() -> void:
 func _resolve_turn(movement: Action) -> void: 
 	match movement:
 		Action.PEDAL: 
-			current_distance += distance_per_pedal
+			current_distance += distance_per_action[Action.PEDAL]
 		Action.BOOST: 
-			current_distance += distance_per_boost
-			current_battery -= BATTERY_DRAIN_PER_BOOST
+			current_distance += distance_per_action[Action.BOOST]
+			current_battery -= BATTERY_DRAIN_PER_ACTION[Action.BOOST]
 
 	current_turn += TURNS_PER_MOVEMENT
 
@@ -240,8 +280,10 @@ func _resolve_turn(movement: Action) -> void:
 func _play_action_button_animation(action: Action, toggled_on: bool) -> void:
 	if toggled_on:
 		action_animation_players[action].play("toggle")
+		info_animation_players[action].play("appear")
 	else:
 		action_animation_players[action].play_backwards("toggle")
+		info_animation_players[action].play_backwards("appear")
 
 
 func _assign_selected_action(action: Action, toggled_on: bool) -> void:
