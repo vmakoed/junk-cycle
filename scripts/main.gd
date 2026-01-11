@@ -89,15 +89,17 @@ var turns : Array[Turn] = [
 ]
 
 
-@onready var distance_label : Label = %DistanceLabel
-@onready var battery_label : Label = %BatteryLabel
-@onready var turns_label : Label = %TurnsLabel
-@onready var distance_progress_bar : ProgressBar = %DistanceProgressBar
-@onready var current_turn_title : Label = %CurrentTurnTitle
-@onready var current_turn_description : Label= %CurrentTurnDescription
-@onready var next_turn_titles : Array[Label] = [%NextTurnTitle, %NextTurnTitle2, %NextTurnTitle3]
-@onready var confirm_button: Button = %ConfirmButton
+@onready var game_start_container: PanelContainer = %GameStartContainer
+@onready var level_container: PanelContainer = %LevelContainer
 @onready var game_end_container: PanelContainer = %GameEndContainer
+@onready var distance_label: Label = %DistanceLabel
+@onready var battery_label: Label = %BatteryLabel
+@onready var turns_label: Label = %TurnsLabel
+@onready var distance_progress_bar: ProgressBar = %DistanceProgressBar
+@onready var current_turn_title: Label = %CurrentTurnTitle
+@onready var current_turn_description: Label= %CurrentTurnDescription
+@onready var next_turn_titles: Array[Label] = [%NextTurnTitle, %NextTurnTitle2, %NextTurnTitle3]
+@onready var confirm_button: Button = %ConfirmButton
 @onready var game_end_label: Label = %GameEndLabel
 
 
@@ -287,13 +289,13 @@ func _resolve_turn(movement: Action) -> void:
 	current_turn += TURNS_PER_MOVEMENT
 
 
-func _play_action_button_animation(action: Action, toggled_on: bool) -> void:
+func _play_action_animations(action: Action, toggled_on: bool) -> void:
 	if toggled_on:
 		action_animation_players[action].play("toggle")
 		info_animation_players[action].play("appear")
 	else:
-		action_animation_players[action].play_backwards("toggle")
 		info_animation_players[action].play_backwards("appear")
+		action_animation_players[action].play_backwards("toggle")
 
 
 func _assign_selected_action(action: Action, toggled_on: bool) -> void:
@@ -311,13 +313,13 @@ func _refresh_other_buttons(another_action: Action, toggled_on: bool) -> void:
 func _on_pedal_button_toggled(toggled_on: bool) -> void:
 	_assign_selected_action(Action.PEDAL, toggled_on)
 	_refresh_other_buttons(Action.BOOST, toggled_on)
-	_play_action_button_animation(Action.PEDAL, toggled_on)
+	_play_action_animations(Action.PEDAL, toggled_on)
 
 
 func _on_boost_button_toggled(toggled_on: bool) -> void:
 	_assign_selected_action(Action.BOOST, toggled_on)
 	_refresh_other_buttons(Action.PEDAL, toggled_on)
-	_play_action_button_animation(Action.BOOST, toggled_on)
+	_play_action_animations(Action.BOOST, toggled_on)
 
 
 func _on_confirm_button_pressed() -> void:
@@ -327,3 +329,14 @@ func _on_confirm_button_pressed() -> void:
 func _on_restart_button_pressed() -> void:
 	_reset_state()
 	game_end_container.hide()
+
+
+func _on_start_button_pressed() -> void:
+	game_start_container.hide()
+	level_container.show()
+
+
+func _on_quit_button_pressed() -> void:
+	game_end_container.hide()
+	level_container.hide()
+	game_start_container.show()
