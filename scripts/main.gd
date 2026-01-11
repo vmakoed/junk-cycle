@@ -6,6 +6,8 @@ const BATTERY_LABEL_TEXT = "{current_battery}%"
 const TURNS_LABEL_TEXT = "{current_turn}/{total_turns}"
 const ACTION_INFO_DISTANCE_TEXT = "+{distance_change}m dist."
 const ACTION_INFO_BATTERY_TEXT = "-{battery_change}% batt."
+const WIN_TEXT = "You win!"
+const GAME_OVER_TEXT = "Game over"
 
 
 const DISTANCE_MIN = 0
@@ -95,6 +97,9 @@ var turns : Array[Turn] = [
 @onready var current_turn_description : Label= %CurrentTurnDescription
 @onready var next_turn_titles : Array[Label] = [%NextTurnTitle, %NextTurnTitle2, %NextTurnTitle3]
 @onready var confirm_button: Button = %ConfirmButton
+@onready var game_end_container: PanelContainer = %GameEndContainer
+@onready var game_end_label: Label = %GameEndLabel
+
 
 @onready var action_buttons: Dictionary[Action, Button] = {
 	Action.PEDAL: %PedalButton,
@@ -129,9 +134,7 @@ var turns : Array[Turn] = [
 
 func _ready() -> void:
 	_initialize_distance_progress_bar()
-	current_distance = DISTANCE_MIN
-	current_battery = BATTERY_MAX
-	current_turn = TURNS_MIN
+	_reset_state()
 
 
 func _set_current_distance(new_value: int) -> void:
@@ -186,6 +189,12 @@ func _set_boost_enabled(new_value: bool) -> void:
 func _set_selected_action(new_value) -> void:
 	selected_action = new_value
 	confirm_button.disabled = new_value == null
+
+
+func _reset_state() -> void:
+	current_distance = DISTANCE_MIN
+	current_battery = BATTERY_MAX
+	current_turn = TURNS_MIN
 
 
 func _is_goal_reached() -> bool:
@@ -251,19 +260,20 @@ func _apply_turn_effects() -> void:
 
 func _on_out_of_turns() -> void:
 	if current_distance < DISTANCE_GOAL:
-		print("you lose :(")
+		game_end_label.text = GAME_OVER_TEXT
 
 	_on_final_turn_played()
 
 
 func _on_goal_reached() -> void:
-	print("you win!")
+	game_end_label.text = WIN_TEXT
 	_on_final_turn_played()
 
 
 func _on_final_turn_played() -> void:
 	pedal_enabled = false
 	boost_enabled = false
+	game_end_container.show()
 	
  
 func _resolve_turn(movement: Action) -> void: 
@@ -312,3 +322,8 @@ func _on_boost_button_toggled(toggled_on: bool) -> void:
 
 func _on_confirm_button_pressed() -> void:
 	_resolve_turn(selected_action)
+
+
+func _on_restart_button_pressed() -> void:
+	_reset_state()
+	game_end_container.hide()
