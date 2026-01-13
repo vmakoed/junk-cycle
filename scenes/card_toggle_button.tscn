@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dg0genq850f8n"]
+
+[ext_resource type="PackedScene" uid="uid://2xi5ammjlwcd" path="res://scenes/card.tscn" id="1_5inow"]
+[ext_resource type="Script" uid="uid://5sm2vbkg6fe8" path="res://scripts/card_toggle_button.gd" id="1_du7xk"]
+
+[node name="CardToggleButton" type="Button"]
+custom_minimum_size = Vector2(96, 144)
+offset_right = 8.0
+offset_bottom = 8.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+script = ExtResource("1_du7xk")
+
+[node name="Card" parent="." instance=ExtResource("1_5inow")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_bottom = 144.0
+title_text = "Card title"
+description_text = "Card description"

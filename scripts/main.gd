@@ -4,14 +4,14 @@ extends Node
 const DISTANCE_LABEL_TEXT = "Distance: {current_distance}/{distance_goal}m"
 const BATTERY_LABEL_TEXT = "{current_battery}%"
 const TURNS_LABEL_TEXT = "{current_turn}/{total_turns}"
-const ACTION_INFO_DISTANCE_TEXT = "+{distance_change}m dist."
+const ACTION_INFO_DISTANCE_TEXT = "+{distance_change}m."
 const ACTION_INFO_BATTERY_TEXT = "-{battery_change}% batt."
 const WIN_TEXT = "You win!"
 const GAME_OVER_TEXT = "Game over"
 
 
 const DISTANCE_MIN = 0
-const DISTANCE_GOAL = 1500
+const DISTANCE_GOAL = 1200
 const BATTERY_MAX = 100
 const BATTERY_MIN = 0
 const TURNS_MIN = 0
@@ -25,16 +25,16 @@ enum Item { HAIR_DRYER, FIRE_ALARM, BLENDER_MOTOR }
 
 const TURN_TITLES : Dictionary[Turn, String] = {
 	Turn.CLEAR: "Clear road",
-	Turn.ICE: "Icy road",
+	Turn.ICE: "Ice",
 	Turn.HILL: "Hill",
 	Turn.TOURIST: "Tourist"
 }
 
 const TURN_DESCRIPTIONS : Dictionary[Turn, String] = {
-	Turn.CLEAR: "A biker's dream! Continue as usual.",
-	Turn.ICE: "Frozen precipitation. You will slip if you boost and move zero distance.",
-	Turn.HILL: "Too many leg days skipped! Pedalling moves half the usual distance.",
-	Turn.TOURIST: "Tourist is approaching! Speed up or wait for them to cross. Pedalling moves zero distance."
+	Turn.CLEAR: "BOOST = normal distance.\nPEDAL = normal distance.",
+	Turn.ICE: "BOOST = 0 distance (slip).\nPEDAL = normal distance.",
+	Turn.HILL: "PEDAL = half distance.\nBOOST = normal.",
+	Turn.TOURIST: "PEDAL = 0 distance.\nBOOST = normal."
 }
 
 const ITEM_TITLES: Dictionary[Item, String] = {
@@ -44,19 +44,19 @@ const ITEM_TITLES: Dictionary[Item, String] = {
 }
 
 const ITEM_DESCRIPTIONS: Dictionary[Item, String] = {
-	Item.HAIR_DRYER: "BOOST through ICE without penalties",
-	Item.FIRE_ALARM: "PEDAL through TOURIST without penalties",
-	Item.BLENDER_MOTOR: "PEDAL through HILL without penalties"
+	Item.HAIR_DRYER: "ICE: BOOST works normally",
+	Item.FIRE_ALARM: "TOURIST: PEDAL works normally",
+	Item.BLENDER_MOTOR: "HILL: PEDAL works normally"
 }
 
-const distances_per_pedal: Dictionary[Turn, int] = {
+const DISTANCES_PER_PEDAL: Dictionary[Turn, int] = {
 	Turn.CLEAR: 50,
 	Turn.ICE: 50,
 	Turn.HILL: 25,
 	Turn.TOURIST: 0
 }
 
-const distances_per_boost: Dictionary[Turn, int] = {
+const DISTANCES_PER_BOOST: Dictionary[Turn, int] = {
 	Turn.CLEAR: 100,
 	Turn.ICE: 0,
 	Turn.HILL: 100,
@@ -76,6 +76,7 @@ var pedal_enabled: bool: set = _set_pedal_enabled
 var boost_enabled: bool: set = _set_boost_enabled
 var selected_action: set = _set_selected_action
 var selected_item: set = _set_selected_item
+var items_button_group : ButtonGroup
 var distance_per_action: Dictionary[Action, int]
 
 
@@ -105,10 +106,11 @@ var turns : Array[Turn] = [
 
 @onready var game_start_container: PanelContainer = %GameStartContainer
 @onready var item_selection_container: PanelContainer = %ItemSelectionContainer
-@onready var level_container: PanelContainer = %LevelContainer
+@onready var level_container: Control = %LevelContainer
 @onready var game_end_container: PanelContainer = %GameEndContainer
 
 @onready var items_container: BoxContainer = %ItemsContainer
+@onready var item_confirmed_button: Button = %ItemConfirmedButton
 
 @onready var distance_label: Label = %DistanceLabel
 @onready var battery_label: Label = %BatteryLabel
@@ -116,11 +118,18 @@ var turns : Array[Turn] = [
 @onready var distance_progress_bar: ProgressBar = %DistanceProgressBar
 @onready var current_turn_title: Label = %CurrentTurnTitle
 @onready var current_turn_description: Label= %CurrentTurnDescription
-@onready var next_TURN_TITLES: Array[Label] = [%NextTurnTitle, %NextTurnTitle2, %NextTurnTitle3]
+@onready var next_turn_cards: Array[Card] = [%NextTurnCard, %NextTurnCard2, %NextTurnCard3]
 @onready var selected_item_card: Card = %SelectedItemCard
 @onready var confirm_button: Button = %ConfirmButton
 
 @onready var game_end_label: Label = %GameEndLabel
+
+
+@onready var card_descriptions_button_container: MarginContainer = %CardDescriptionsButtonContainer
+@onready var turn_descriptions_screen: PanelContainer = %TurnDescriptionsScreen
+@onready var turn_descriptions_container: BoxContainer = %TurnDescriptionsContainer
+@onready var item_descriptions_screen: PanelContainer = %ItemDescriptionsScreen
+@onready var item_descriptions_container: BoxContainer = %ItemDescriptionsContainer
 
 
 @onready var action_buttons: Dictionary[Action, Button] = {
@@ -128,37 +137,24 @@ var turns : Array[Turn] = [
 	Action.BOOST: %BoostButton
 } 
 
-@onready var action_info_containers: Dictionary[Action, PanelContainer] = {
-	Action.PEDAL: %PedalInfo,
-	Action.BOOST: %BoostInfo
-}
-
-@onready var action_animation_players : Dictionary[Action, AnimationPlayer] = {
-	Action.PEDAL: action_buttons[Action.PEDAL].find_child("AnimationPlayer"),
-	Action.BOOST: action_buttons[Action.BOOST].find_child("AnimationPlayer")
-}
-
-@onready var info_animation_players : Dictionary[Action, AnimationPlayer] = {
-	Action.PEDAL: action_info_containers[Action.PEDAL].find_child("AnimationPlayer"),
-	Action.BOOST: action_info_containers[Action.BOOST].find_child("AnimationPlayer")
-}
 
 @onready var distance_labels : Dictionary[Action, Label] = {
-	Action.PEDAL: action_info_containers[Action.PEDAL].find_child("DistanceLabel"),
-	Action.BOOST: action_info_containers[Action.BOOST].find_child("DistanceLabel")
+	Action.PEDAL: action_buttons[Action.PEDAL].find_child("DistanceLabel"),
+	Action.BOOST: action_buttons[Action.BOOST].find_child("DistanceLabel")
 }
 
 @onready var battery_labels : Dictionary[Action, Label] = {
-	Action.PEDAL: action_info_containers[Action.PEDAL].find_child("BatteryLabel"),
-	Action.BOOST: action_info_containers[Action.BOOST].find_child("BatteryLabel")
+	Action.PEDAL: action_buttons[Action.PEDAL].find_child("BatteryLabel"),
+	Action.BOOST: action_buttons[Action.BOOST].find_child("BatteryLabel")
 }
 
 
 func _ready() -> void:
 	_initialize_distance_progress_bar()
-	_setup_cards()
-	_setup_card_selection_events()
-	_reset_state()
+	_setup_item_cards()
+	_setup_turn_descriptions()
+	_setup_item_descriptions()
+	card_descriptions_button_container.hide()
 
 
 func _set_current_distance(new_value: int) -> void:
@@ -197,14 +193,14 @@ func _set_pedal_enabled(new_value: bool) -> void:
 	pedal_enabled = new_value
 	action_buttons[Action.PEDAL].disabled = not pedal_enabled
 
-	if not pedal_enabled && selected_action == Action.PEDAL:
+	if not pedal_enabled and selected_action == Action.PEDAL:
 		action_buttons[Action.PEDAL].button_pressed = false
 
 
 func _set_boost_enabled(new_value: bool) -> void:
 	boost_enabled = new_value
 
-	if not boost_enabled && selected_action == Action.BOOST:
+	if not boost_enabled and selected_action == Action.BOOST:
 		action_buttons[Action.BOOST].button_pressed = false
 
 	action_buttons[Action.BOOST].disabled = not boost_enabled
@@ -217,13 +213,15 @@ func _set_selected_action(new_value) -> void:
 
 func _set_selected_item(new_value) -> void:
 	selected_item = new_value
-	_refresh_selected_item_card()
+	item_confirmed_button.disabled = selected_item == null
+	if selected_item != null: _refresh_selected_item_card()
 
 
 func _reset_state() -> void:
 	current_distance = DISTANCE_MIN
 	current_battery = BATTERY_MAX
 	current_turn = TURNS_MIN
+	pedal_enabled = true
 
 
 func _is_goal_reached() -> bool:
@@ -255,18 +253,38 @@ func _initialize_distance_progress_bar() -> void:
 	distance_progress_bar.max_value = DISTANCE_GOAL
 
 
-func _setup_cards() -> void:
+func _setup_item_cards() -> void:
+	items_button_group = ButtonGroup.new()
+	items_button_group.pressed.connect(_on_item_selection_changed)
+
 	for item in Item.values():
-		var scene := load("res://scenes/toggleable_card.tscn")
-		var node := scene.instantiate() as ToggleableCard
+		var scene := load("res://scenes/card_toggle_button.tscn")
+		var node := scene.instantiate() as CardToggleButton
 		items_container.add_child(node)
+		node.button_group = items_button_group
 		node.card.title_text = ITEM_TITLES[item]
 		node.card.description_text = ITEM_DESCRIPTIONS[item]
 		node.card.refresh()
 
 
-func _setup_card_selection_events() -> void:
-	items_container.toggled_child_changed.connect(_on_item_selection_changed)
+func _setup_turn_descriptions() -> void:
+	for item in Turn.values():
+		var scene := load("res://scenes/card.tscn")
+		var node := scene.instantiate() as Card
+		turn_descriptions_container.add_child(node)
+		node.title_text = TURN_TITLES[item]
+		node.description_text = TURN_DESCRIPTIONS[item]
+		node.refresh()
+
+
+func _setup_item_descriptions() -> void:
+	for item in Item.values():
+		var scene := load("res://scenes/card.tscn")
+		var node := scene.instantiate() as Card
+		item_descriptions_container.add_child(node)
+		node.title_text = ITEM_TITLES[item]
+		node.description_text = ITEM_DESCRIPTIONS[item]
+		node.refresh()
 
 
 func _refresh_distance_progress_bar() -> void:
@@ -289,12 +307,15 @@ func _refresh_action_info() -> void:
 
 
 func _refresh_next_turns() -> void:
-	for next_turn_difference in next_TURN_TITLES.size():
+	for next_turn_difference in next_turn_cards.size():
 		var next_turn := current_turn + 1 + next_turn_difference
+
 		if next_turn >= turns.size():
-			next_TURN_TITLES[next_turn_difference].text = ""
+			next_turn_cards[next_turn_difference].title_text = ""
 		else:
-			next_TURN_TITLES[next_turn_difference].text = TURN_TITLES[turns[next_turn]]
+			next_turn_cards[next_turn_difference].title_text = TURN_TITLES[turns[next_turn]]
+		
+		next_turn_cards[next_turn_difference].refresh()
 
 
 func _refresh_selected_item_card() -> void:
@@ -304,8 +325,23 @@ func _refresh_selected_item_card() -> void:
 
 
 func _apply_turn_effects() -> void:
-	distance_per_action[Action.PEDAL] = distances_per_pedal[turns[current_turn]]
-	distance_per_action[Action.BOOST] = distances_per_boost[turns[current_turn]]
+	_apply_pedal_effect()
+	_apply_boost_effect()
+
+
+func _apply_pedal_effect() -> void:
+	if (selected_item == Item.FIRE_ALARM and turns[current_turn] == Turn.TOURIST) or \
+		(selected_item == Item.BLENDER_MOTOR and turns[current_turn] == Turn.HILL):
+			distance_per_action[Action.PEDAL] = DISTANCES_PER_PEDAL[Turn.CLEAR]
+	else:
+		distance_per_action[Action.PEDAL] = DISTANCES_PER_PEDAL[turns[current_turn]]
+
+
+func _apply_boost_effect() -> void:
+	if (selected_item == Item.HAIR_DRYER and turns[current_turn] == Turn.ICE):
+		distance_per_action[Action.BOOST] = DISTANCES_PER_BOOST[Turn.CLEAR]
+	else:
+		distance_per_action[Action.BOOST] = DISTANCES_PER_BOOST[turns[current_turn]]
 
 
 func _on_out_of_turns() -> void:
@@ -323,6 +359,7 @@ func _on_goal_reached() -> void:
 func _on_final_turn_played() -> void:
 	pedal_enabled = false
 	boost_enabled = false
+	card_descriptions_button_container.hide()
 	game_end_container.show()
 	
  
@@ -337,15 +374,6 @@ func _resolve_turn(movement: Action) -> void:
 	current_turn += TURNS_PER_MOVEMENT
 
 
-func _play_action_animations(action: Action, toggled_on: bool) -> void:
-	if toggled_on:
-		action_animation_players[action].play("toggle")
-		info_animation_players[action].play("appear")
-	else:
-		info_animation_players[action].play_backwards("appear")
-		action_animation_players[action].play_backwards("toggle")
-
-
 func _assign_selected_action(action: Action, toggled_on: bool) -> void:
 	if toggled_on:
 		selected_action = action
@@ -354,46 +382,66 @@ func _assign_selected_action(action: Action, toggled_on: bool) -> void:
 
 
 func _refresh_other_buttons(another_action: Action, toggled_on: bool) -> void:
-	if toggled_on && action_buttons[another_action].button_pressed:
+	if toggled_on and action_buttons[another_action].button_pressed:
 		action_buttons[another_action].button_pressed = false
 
 
 func _on_pedal_button_toggled(toggled_on: bool) -> void:
 	_assign_selected_action(Action.PEDAL, toggled_on)
 	_refresh_other_buttons(Action.BOOST, toggled_on)
-	_play_action_animations(Action.PEDAL, toggled_on)
 
 
 func _on_boost_button_toggled(toggled_on: bool) -> void:
 	_assign_selected_action(Action.BOOST, toggled_on)
 	_refresh_other_buttons(Action.PEDAL, toggled_on)
-	_play_action_animations(Action.BOOST, toggled_on)
 
 
 func _on_confirm_button_pressed() -> void:
 	_resolve_turn(selected_action)
 
 
-func _on_item_selection_changed(item: ToggleableCard) -> void:
-	selected_item = Item[Item.keys()[item.get_index()]]
+func _on_item_selection_changed(button: CardToggleButton) -> void:
+	selected_item = Item[Item.keys()[button.get_index()]]
 
 
 func _on_start_button_pressed() -> void:
 	game_start_container.hide()
 	item_selection_container.show()
+	card_descriptions_button_container.show()
 
 
 func _on_item_confirmed_button_pressed() -> void:
 	item_selection_container.hide()
+	_reset_state()
 	level_container.show()
 
 
 func _on_restart_button_pressed() -> void:
-	_reset_state()
+	level_container.hide()
 	game_end_container.hide()
 	item_selection_container.show()
+	card_descriptions_button_container.show()
 
 
 func _on_quit_button_pressed() -> void:
+	level_container.hide()
 	game_end_container.hide()
 	game_start_container.show()
+
+
+func _on_turn_descriptions_button_pressed() -> void:
+	item_descriptions_screen.hide()
+	turn_descriptions_screen.show()
+
+
+func _on_turn_descriptions_close_button_pressed() -> void:
+	turn_descriptions_screen.hide()
+
+
+func _on_item_descriptions_button_pressed() -> void:
+	turn_descriptions_screen.hide()
+	item_descriptions_screen.show()
+
+
+func _on_item_descriptions_close_button_pressed() -> void:
+	item_descriptions_screen.hide()

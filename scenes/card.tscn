@@ -1,54 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://2xi5ammjlwcd"]
+[gd_scene load_steps=2 format=3 uid="uid://2xi5ammjlwcd"]
 
 [ext_resource type="Script" uid="uid://c3fbl0kvvfx1r" path="res://scripts/card.gd" id="1_6u4wf"]
-[ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/text_md.tres" id="1_d81rb"]
 
-[node name="Card" type="Control" node_paths=PackedStringArray("toggleable")]
-custom_minimum_size = Vector2(240, 312)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 240.0
-offset_bottom = 312.0
-size_flags_vertical = 0
-script = ExtResource("1_6u4wf")
-toggleable = NodePath("")
-
-[node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Card" type="PanelContainer"]
+custom_minimum_size = Vector2(96, 144)
+offset_right = 96.0
+offset_bottom = 152.0
 mouse_filter = 1
+script = ExtResource("1_6u4wf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 1
-theme = ExtResource("1_d81rb")
 text = "Card title"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 uppercase = true
-
-[node name="Control" type="Control" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-mouse_filter = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_right = 12
-
-[node name="Description" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-text = "Card description"
-autowrap_mode = 3

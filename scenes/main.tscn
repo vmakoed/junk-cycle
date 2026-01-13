@@ -1,234 +1,21 @@
-[gd_scene load_steps=22 format=3 uid="uid://duqbpuyr7odl0"]
+[gd_scene load_steps=8 format=3 uid="uid://duqbpuyr7odl0"]
 
 [ext_resource type="Script" uid="uid://ypvni8lhif4t" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/text_md.tres" id="1_o5qli"]
 [ext_resource type="Theme" uid="uid://buy7kthij60sy" path="res://resources/theme.tres" id="2_sugp2"]
-[ext_resource type="Theme" uid="uid://c2he7r767cqnb" path="res://resources/text_lg.tres" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://2xi5ammjlwcd" path="res://scenes/card.tscn" id="4_tbgi4"]
-[ext_resource type="Script" uid="uid://ebuyv1t2e2c4" path="res://scripts/toggle_container.gd" id="4_tefeu"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0wfyh"]
-
-[sub_resource type="Animation" id="Animation_o6xl0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_styles/panel")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("StyleBoxEmpty_0wfyh")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer/HBoxContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_tefeu"]
-resource_name = "appear"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_styles/panel")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [SubResource("StyleBoxEmpty_0wfyh"), null]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer/HBoxContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tipki"]
-_data = {
-&"RESET": SubResource("Animation_o6xl0"),
-&"appear": SubResource("Animation_tefeu")
-}
-
-[sub_resource type="Animation" id="Animation_sugp2"]
-length = 0.1
-
-[sub_resource type="Animation" id="Animation_0wfyh"]
-resource_name = "toggle"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:custom_minimum_size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(120, 48), Vector2(120, 168)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_sugp2"]
-_data = {
-&"RESET": SubResource("Animation_sugp2"),
-&"toggle": SubResource("Animation_0wfyh")
-}
-
-[sub_resource type="Animation" id="Animation_tbgi4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:custom_minimum_size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(120, 48)]
-}
-
-[sub_resource type="Animation" id="Animation_jyhfs"]
-resource_name = "toggle"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:custom_minimum_size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(120, 48), Vector2(120, 168)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tefeu"]
-_data = {
-&"RESET": SubResource("Animation_tbgi4"),
-&"toggle": SubResource("Animation_jyhfs")
-}
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jyhfs"]
-
-[sub_resource type="Animation" id="Animation_85g3d"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_styles/panel")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("StyleBoxEmpty_jyhfs")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer/HBoxContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_tipki"]
-resource_name = "appear"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:theme_override_styles/panel")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [SubResource("StyleBoxEmpty_jyhfs"), null]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer/HBoxContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_choun"]
-_data = {
-&"RESET": SubResource("Animation_85g3d"),
-&"appear": SubResource("Animation_tipki")
-}
+[sub_resource type="Theme" id="Theme_tbgi4"]
+default_font_size = 48
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0wfyh"]
 bg_color = Color(0.65882355, 0.65882355, 0.65882355, 0.7529412)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+
 [node name="Main" type="Node"]
 script = ExtResource("1_0wfyh")
-
-[node name="GameStartContainer" type="PanelContainer" parent="."]
-unique_name_in_owner = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_sugp2")
-
-[node name="Label" type="Label" parent="GameStartContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 72
-text = "Junk Cycle"
-
-[node name="MarginContainer" type="MarginContainer" parent="GameStartContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/margin_bottom = 120
-
-[node name="StartButton" type="Button" parent="GameStartContainer/MarginContainer"]
-custom_minimum_size = Vector2(216, 96)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme = ExtResource("2_sugp2")
-theme_type_variation = &"ButtonLarge"
-text = "START"
 
 [node name="ItemSelectionContainer" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -250,453 +37,458 @@ layout_mode = 2
 [node name="Label" type="Label" parent="ItemSelectionContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
-theme = ExtResource("3_jyhfs")
+theme = SubResource("Theme_tbgi4")
 text = "Select Item"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="Spacer" type="Control" parent="ItemSelectionContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
+[node name="Spacer2" type="Control" parent="ItemSelectionContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="ItemsContainer" type="HBoxContainer" parent="ItemSelectionContainer/VBoxContainer"]
+[node name="ItemsContainer" type="HBoxContainer" parent="ItemSelectionContainer/VBoxContainer/Spacer2"]
 unique_name_in_owner = true
-layout_mode = 2
+custom_minimum_size = Vector2(0, 144)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -72.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 48
-script = ExtResource("4_tefeu")
-
-[node name="Spacer2" type="Control" parent="ItemSelectionContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
 
 [node name="ItemConfirmedButton" type="Button" parent="ItemSelectionContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(216, 96)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme = ExtResource("1_o5qli")
+disabled = true
 text = "CONFIRM"
 
-[node name="LevelContainer" type="PanelContainer" parent="."]
+[node name="Spacer3" type="Control" parent="ItemSelectionContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="LevelContainer" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MaginContainer" type="MarginContainer" parent="LevelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_right = 24
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LevelContainer/MaginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 48
-
-[node name="DistanceContainer" type="Control" parent="LevelContainer/MaginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-
-[node name="DistanceProgressBar" type="ProgressBar" parent="LevelContainer/MaginContainer/VBoxContainer/DistanceContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 72)
+[node name="MarginContainer2" type="MarginContainer" parent="LevelContainer"]
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 1
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+
+[node name="DistanceProgressBar" type="ProgressBar" parent="LevelContainer/MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
 show_percentage = false
 
-[node name="DistanceLabel" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/DistanceContainer"]
+[node name="DistanceLabel" type="Label" parent="LevelContainer/MarginContainer2/DistanceProgressBar"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = -11.5
+offset_right = 54.5
+offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_o5qli")
-text = "Distance: 0/2000m"
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "Distance: 0/1500m"
 
-[node name="InfoContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-theme_override_constants/separation = 24
-
-[node name="ResourcesPanel" type="Panel" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer"]
-custom_minimum_size = Vector2(240, 96)
-layout_mode = 2
-size_flags_horizontal = 8
+[node name="PanelContainer2" type="PanelContainer" parent="LevelContainer"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -156.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/ResourcesPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MarginContainer" type="MarginContainer" parent="LevelContainer/PanelContainer2"]
+layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_right = 24
 
-[node name="ResourcesContainer" type="GridContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelContainer/PanelContainer2/MarginContainer"]
+custom_minimum_size = Vector2(0, 312)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 48
+
+[node name="Button" type="Button" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="PanelContainer2" type="PanelContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(312, 216)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 36
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+
+[node name="PanelContainer" type="ProgressBar" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+show_percentage = false
+
+[node name="BatteryLabel" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -11.5
+offset_right = 21.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "100%"
+
+[node name="PanelContainer2" type="ProgressBar" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/h_separation = 0
-theme_override_constants/v_separation = 0
-columns = 2
+show_percentage = false
 
-[node name="BatteryTitle" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
-custom_minimum_size = Vector2(96, 48)
-layout_mode = 2
-theme = ExtResource("1_o5qli")
-text = "Battery:"
-vertical_alignment = 1
-
-[node name="BatteryLabel" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
+[node name="TurnsLabel" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PanelContainer2"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(96, 48)
-layout_mode = 2
-size_flags_vertical = 1
-theme = ExtResource("1_o5qli")
-text = "100%"
-vertical_alignment = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -11.5
+offset_right = 21.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0 / 20"
 
-[node name="TurnsTitle" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
-custom_minimum_size = Vector2(96, 48)
-layout_mode = 2
-theme = ExtResource("1_o5qli")
-text = "Turn:"
-vertical_alignment = 1
-
-[node name="TurnsLabel" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/ResourcesPanel/MarginContainer/ResourcesContainer"]
+[node name="SelectedItemCard" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer" instance=ExtResource("4_tbgi4")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
-size_flags_vertical = 1
-theme = ExtResource("1_o5qli")
-text = "0/20"
-vertical_alignment = 1
+size_flags_horizontal = 8
+size_flags_vertical = 8
 
-[node name="CardsContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="Panel" type="Panel" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer"]
-custom_minimum_size = Vector2(240, 0)
+[node name="Control" type="Control" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CurrentTurnInfo" type="VBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="CurrentTurnTitle" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo"]
-unique_name_in_owner = true
+[node name="Control" type="Control" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-theme = ExtResource("1_o5qli")
-text = "Turn name"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
 
-[node name="Control" type="Control" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Turn image"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CurrentTurnDescription" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/Panel/CurrentTurnInfo"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 96)
-layout_mode = 2
-size_flags_vertical = 8
-text = "Turn description"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="NextTurnsContainer" type="VBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer"]
-custom_minimum_size = Vector2(240, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 12
-
-[node name="NextTurnPanel" type="Panel" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 10
-text = "Next turn: "
-
-[node name="NextTurnTitle" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-text = "TURN NAME"
-
-[node name="NextTurnPanel2" type="Panel" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 10
-text = "In 2 turns:"
-
-[node name="NextTurnTitle2" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel2/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-text = "TURN NAME"
-
-[node name="NextTurnPanel3" type="Panel" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel3/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 10
-text = "In 3 turns:"
-
-[node name="NextTurnTitle3" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer/CardsContainer/NextTurnsContainer/NextTurnPanel3/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-text = "TURN NAME"
-
-[node name="SelectedItemCard" parent="LevelContainer/MaginContainer/VBoxContainer/InfoContainer" instance=ExtResource("4_tbgi4")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="ActionsContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 168)
-layout_mode = 2
-size_flags_vertical = 8
 theme_override_constants/separation = 24
 
-[node name="OptionsButtonMargin2" type="MarginContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer"]
-custom_minimum_size = Vector2(120, 0)
+[node name="Label" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 36)
+layout_mode = 2
+text = "Next move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 36)
+layout_mode = 2
+text = "In 2 moves"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 36)
+layout_mode = 2
+text = "In 3 moves"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer4" type="HBoxContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+
+[node name="NextTurnCard" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer4" instance=ExtResource("4_tbgi4")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NextTurnCard2" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer4" instance=ExtResource("4_tbgi4")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NextTurnCard3" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/VBoxContainer/PanelContainer4" instance=ExtResource("4_tbgi4")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_bottom = 24
+size_flags_vertical = 4
 
-[node name="Button" type="Button" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/OptionsButtonMargin2"]
+[node name="MarginContainer" type="HBoxContainer" parent="LevelContainer"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -144.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="LevelContainer/MarginContainer"]
+custom_minimum_size = Vector2(168, 0)
 layout_mode = 2
-disabled = true
-text = "OPTIONS"
 
-[node name="Control" type="Control" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelContainer/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 24
 
-[node name="PedalContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer"]
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_constants/separation = 12
-
-[node name="PedalInfo" type="PanelContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer"]
+[node name="PedalButton" type="Button" parent="LevelContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 96)
+custom_minimum_size = Vector2(96, 144)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxEmpty_0wfyh")
+toggle_mode = true
 
-[node name="MarginContainer" type="MarginContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalInfo"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 6
+[node name="Label" type="Label" parent="LevelContainer/MarginContainer/HBoxContainer/PedalButton"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -25.0
+offset_right = 25.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "pedal"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
-[node name="HBoxContainer" type="VBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalInfo/MarginContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelContainer/MarginContainer/HBoxContainer/PedalButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -25.0
+offset_right = 0.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="DistanceLabel" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalInfo/MarginContainer/HBoxContainer"]
+[node name="DistanceLabel" type="Label" parent="LevelContainer/MarginContainer/HBoxContainer/PedalButton/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "+50m dist."
+text = "+50m"
+horizontal_alignment = 1
 
-[node name="BatteryLabel" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalInfo/MarginContainer/HBoxContainer"]
+[node name="BatteryLabel" type="Label" parent="LevelContainer/MarginContainer/HBoxContainer/PedalButton/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "-0% batt."
+horizontal_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalInfo"]
-libraries = {
-&"": SubResource("AnimationLibrary_tipki")
-}
-
-[node name="PedalButton" type="Button" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer"]
+[node name="BoostButton" type="Button" parent="LevelContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 48)
+custom_minimum_size = Vector2(96, 144)
 layout_mode = 2
-size_flags_vertical = 8
-theme = ExtResource("1_o5qli")
 toggle_mode = true
 
-[node name="Label" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalButton"]
+[node name="Label" type="Label" parent="LevelContainer/MarginContainer/HBoxContainer/BoostButton"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -37.5
-offset_right = 37.5
-offset_bottom = 40.0
+offset_left = -25.0
+offset_right = 25.0
+offset_bottom = 23.0
 grow_horizontal = 2
-text = "Pedal"
+text = "boost"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalButton"]
-libraries = {
-&"": SubResource("AnimationLibrary_sugp2")
-}
-
-[node name="BoostContainer" type="HBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 12
-
-[node name="BoostButton" type="Button" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 48)
-layout_mode = 2
-size_flags_vertical = 8
-theme = ExtResource("1_o5qli")
-toggle_mode = true
-
-[node name="Label" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostButton"]
-custom_minimum_size = Vector2(0, 48)
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelContainer/MarginContainer/HBoxContainer/BoostButton"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -37.5
-offset_right = 37.5
-offset_bottom = 40.0
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -25.0
+offset_right = 0.5
+offset_bottom = 25.0
 grow_horizontal = 2
-text = "Boost"
+grow_vertical = 2
+
+[node name="DistanceLabel" type="Label" parent="LevelContainer/MarginContainer/HBoxContainer/BoostButton/VBoxContainer"]
+layout_mode = 2
+text = "+100m"
 horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostButton"]
-libraries = {
-&"": SubResource("AnimationLibrary_tefeu")
-}
+[node name="BatteryLabel" type="Label" parent="LevelContainer/MarginContainer/HBoxContainer/BoostButton/VBoxContainer"]
+layout_mode = 2
+text = "-0% batt."
+horizontal_alignment = 1
 
-[node name="BoostInfo" type="PanelContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer"]
+[node name="Control2" type="Control" parent="LevelContainer/MarginContainer"]
+custom_minimum_size = Vector2(144, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ConfirmButton" type="Button" parent="LevelContainer/MarginContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 96)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_styles/panel = SubResource("StyleBoxEmpty_jyhfs")
-
-[node name="MarginContainer" type="MarginContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostInfo"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 6
-
-[node name="HBoxContainer" type="VBoxContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostInfo/MarginContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-
-[node name="DistanceLabel" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostInfo/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "+100m dist."
-
-[node name="BatteryLabel" type="Label" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostInfo/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "-10% batt."
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostInfo"]
-libraries = {
-&"": SubResource("AnimationLibrary_choun")
-}
-
-[node name="Control2" type="Control" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ConfirmButtonMargin" type="MarginContainer" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(96, 48)
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_bottom = 24
-
-[node name="ConfirmButton" type="Button" parent="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/ConfirmButtonMargin"]
-unique_name_in_owner = true
-layout_mode = 2
+size_flags_vertical = 4
 disabled = true
 text = "CONFIRM"
+
+[node name="Control3" type="Control" parent="LevelContainer/MarginContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="LevelContainer"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+
+[node name="PanelContainer" type="PanelContainer" parent="LevelContainer/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(144, 216)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CurrentTurnTitle" type="Label" parent="LevelContainer/PanelContainer/MarginContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 1
+text = "TURN TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="MarginContainer" type="MarginContainer" parent="LevelContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_bottom = 24
+
+[node name="CurrentTurnDescription" type="Label" parent="LevelContainer/PanelContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 8
+text = "BOOST = nomal distance. 
+PEDAL = half distance"
+autowrap_mode = 2
+
+[node name="GameStartContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_sugp2")
+
+[node name="Label" type="Label" parent="GameStartContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 72
+text = "Junk Cycle"
+
+[node name="Label2" type="Label" parent="GameStartContainer"]
+custom_minimum_size = Vector2(648, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Junk Cycle is a turn-based resource management game where you navigate a bike commute through the city with a battery cobbled together from household junk. Your goal is to reach your destination within the move limit by managing your battery carefully and choosing when to boost versus pedal."
+autowrap_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="GameStartContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_bottom = 72
+
+[node name="StartButton" type="Button" parent="GameStartContainer/MarginContainer"]
+custom_minimum_size = Vector2(216, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("1_o5qli")
+theme_type_variation = &"ButtonLarge"
+text = "START"
 
 [node name="GameEndContainer" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -743,10 +535,157 @@ theme_override_font_sizes/font_size = 24
 text = "QUIT
 "
 
-[connection signal="pressed" from="GameStartContainer/MarginContainer/StartButton" to="." method="_on_start_button_pressed"]
+[node name="TurnDescriptionsScreen" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tbgi4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TurnDescriptionsScreen"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginTop" type="Control" parent="TurnDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TurnDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme = SubResource("Theme_tbgi4")
+text = "obstacles"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Spacer" type="Control" parent="TurnDescriptionsScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TurnDescriptionsContainer" type="HBoxContainer" parent="TurnDescriptionsScreen/VBoxContainer/Spacer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 144)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -72.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 48
+
+[node name="TurnDescriptionsCloseButton" type="Button" parent="TurnDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(216, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_o5qli")
+text = "CLOSE"
+
+[node name="Spacer3" type="Control" parent="TurnDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="ItemDescriptionsScreen" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tbgi4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ItemDescriptionsScreen"]
+layout_mode = 2
+
+[node name="MarginTop" type="Control" parent="ItemDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ItemDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme = SubResource("Theme_tbgi4")
+text = "items"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Spacer" type="Control" parent="ItemDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemDescriptionsContainer" type="HBoxContainer" parent="ItemDescriptionsScreen/VBoxContainer/Spacer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 144)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -72.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 48
+
+[node name="ItemDescriptionsCloseButton" type="Button" parent="ItemDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(216, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("1_o5qli")
+text = "CLOSE"
+
+[node name="Spacer3" type="Control" parent="ItemDescriptionsScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="CardDescriptionsButtonContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+
+[node name="ItemDescriptionsButton" type="Button" parent="CardDescriptionsButtonContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "i"
+
+[node name="TurnDescriptionsButton" type="Button" parent="CardDescriptionsButtonContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "i"
+autowrap_mode = 3
+
 [connection signal="pressed" from="ItemSelectionContainer/VBoxContainer/ItemConfirmedButton" to="." method="_on_item_confirmed_button_pressed"]
-[connection signal="toggled" from="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/PedalContainer/PedalButton" to="." method="_on_pedal_button_toggled"]
-[connection signal="toggled" from="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/BoostContainer/BoostButton" to="." method="_on_boost_button_toggled"]
-[connection signal="pressed" from="LevelContainer/MaginContainer/VBoxContainer/ActionsContainer/ConfirmButtonMargin/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="toggled" from="LevelContainer/MarginContainer/HBoxContainer/PedalButton" to="." method="_on_pedal_button_toggled"]
+[connection signal="toggled" from="LevelContainer/MarginContainer/HBoxContainer/BoostButton" to="." method="_on_boost_button_toggled"]
+[connection signal="pressed" from="LevelContainer/MarginContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="GameStartContainer/MarginContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="TurnDescriptionsScreen/VBoxContainer/TurnDescriptionsCloseButton" to="." method="_on_turn_descriptions_close_button_pressed"]
+[connection signal="pressed" from="ItemDescriptionsScreen/VBoxContainer/ItemDescriptionsCloseButton" to="." method="_on_item_descriptions_close_button_pressed"]
+[connection signal="pressed" from="CardDescriptionsButtonContainer/ItemDescriptionsButton" to="." method="_on_item_descriptions_button_pressed"]
+[connection signal="pressed" from="CardDescriptionsButtonContainer/TurnDescriptionsButton" to="." method="_on_turn_descriptions_button_pressed"]

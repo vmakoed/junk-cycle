@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://drotd71lqepgk"]
+
+[ext_resource type="Script" uid="uid://w48mwipqkl60" path="res://scripts/card_button_group.gd" id="1_ie20d"]
+[ext_resource type="PackedScene" uid="uid://dg0genq850f8n" path="res://scenes/card_toggle_button.tscn" id="1_rh6xq"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ie20d"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_c0rfk"]
+allow_unpress = true
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ne0q3"]
+allow_unpress = true
+
+[node name="CardButtonGroup" type="HBoxContainer"]
+offset_right = 296.0
+offset_bottom = 144.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 24
+script = ExtResource("1_ie20d")
+
+[node name="CardToggleButton" parent="." instance=ExtResource("1_rh6xq")]
+layout_mode = 2
+size_flags_vertical = 4
+button_group = SubResource("ButtonGroup_ie20d")
+
+[node name="CardToggleButton2" parent="." instance=ExtResource("1_rh6xq")]
+layout_mode = 2
+size_flags_vertical = 4
+button_group = SubResource("ButtonGroup_c0rfk")
+
+[node name="CardToggleButton3" parent="." instance=ExtResource("1_rh6xq")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+button_group = SubResource("ButtonGroup_ne0q3")

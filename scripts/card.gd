@@ -7,7 +7,6 @@ class_name Card
 
 
 @onready var title: Label = %Title
-@onready var description: Label = %Description
 
 
 func _ready() -> void:
@@ -16,4 +15,3 @@ func _ready() -> void:
 
 func refresh() -> void:
 	title.text = title_text
-	description.text = description_text
