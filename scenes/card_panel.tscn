@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://d02m40j3buog5"]
+
+[ext_resource type="PackedScene" uid="uid://cc4ds6l5vfo8t" path="res://scenes/card_medium.tscn" id="1_pi4y6"]
+[ext_resource type="Script" uid="uid://dj6h3cuyfhyjd" path="res://scripts/card_panel.gd" id="1_xwf12"]
+
+[node name="CardPanel" type="PanelContainer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 192.0
+grow_vertical = 2
+script = ExtResource("1_xwf12")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+
+[node name="Card" parent="MarginContainer" instance=ExtResource("1_pi4y6")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_bottom = 24
+
+[node name="Description" type="Label" parent="MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_vertical = 8
+text = "BOOST = nomal distance. 
+PEDAL = half distance"
+autowrap_mode = 2

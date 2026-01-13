@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc4ds6l5vfo8t"]
+
+[ext_resource type="Script" uid="uid://c3fbl0kvvfx1r" path="res://scripts/card.gd" id="1_3a6fc"]
+[ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/text_md.tres" id="2_cpci8"]
+
+[node name="CardMedium" type="PanelContainer"]
+custom_minimum_size = Vector2(144, 216)
+offset_right = 96.0
+offset_bottom = 152.0
+mouse_filter = 1
+script = ExtResource("1_3a6fc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme = ExtResource("2_cpci8")
+text = "Card title"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+uppercase = true

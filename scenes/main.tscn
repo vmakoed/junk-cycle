@@ -1,18 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://duqbpuyr7odl0"]
+[gd_scene load_steps=9 format=3 uid="uid://duqbpuyr7odl0"]
 
 [ext_resource type="Script" uid="uid://ypvni8lhif4t" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/text_md.tres" id="1_o5qli"]
 [ext_resource type="Theme" uid="uid://buy7kthij60sy" path="res://resources/theme.tres" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://2xi5ammjlwcd" path="res://scenes/card.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://cc4ds6l5vfo8t" path="res://scenes/card_medium.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://cgs54jmueouap" path="res://scenes/card_info_screen.tscn" id="6_tefeu"]
 
 [sub_resource type="Theme" id="Theme_tbgi4"]
 default_font_size = 48
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0wfyh"]
 bg_color = Color(0.65882355, 0.65882355, 0.65882355, 0.7529412)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
-bg_color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_0wfyh")
@@ -77,6 +76,20 @@ text = "CONFIRM"
 [node name="Spacer3" type="Control" parent="ItemSelectionContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
+
+[node name="DescriptionsButtonContainer" type="MarginContainer" parent="ItemSelectionContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+
+[node name="DescriptionsButton" type="Button" parent="ItemSelectionContainer/DescriptionsButtonContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "i"
+autowrap_mode = 3
 
 [node name="LevelContainer" type="Control" parent="."]
 unique_name_in_owner = true
@@ -169,49 +182,66 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_constants/separation = 24
 
-[node name="PanelContainer" type="ProgressBar" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+[node name="BatteryProgressBar" type="ProgressBar" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 show_percentage = false
 
-[node name="BatteryLabel" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PanelContainer"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/BatteryProgressBar"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -21.0
-offset_top = -11.5
-offset_right = 21.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "100%"
 
-[node name="PanelContainer2" type="ProgressBar" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/BatteryProgressBar/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "Battery"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BatteryLabel" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/BatteryProgressBar/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="MoveProgressBar" type="ProgressBar" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 show_percentage = false
 
-[node name="TurnsLabel" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PanelContainer2"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/MoveProgressBar"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -21.0
-offset_top = -11.5
-offset_right = 21.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/MoveProgressBar/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 0
+text = "Move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnsLabel" type="Label" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/MoveProgressBar/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 8
 text = "0 / 20"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SelectedItemCard" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/PanelContainer2/MarginContainer" instance=ExtResource("4_tbgi4")]
 unique_name_in_owner = true
@@ -273,11 +303,12 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button2" type="Button" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer"]
+[node name="DescriptionsButton" type="Button" parent="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
+text = "i"
 
 [node name="MarginContainer" type="HBoxContainer" parent="LevelContainer"]
 layout_mode = 1
@@ -422,21 +453,11 @@ layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_right = 24
 
-[node name="PanelContainer" type="PanelContainer" parent="LevelContainer/PanelContainer/MarginContainer"]
-custom_minimum_size = Vector2(144, 216)
+[node name="CurrentTurnCard" parent="LevelContainer/PanelContainer/MarginContainer" instance=ExtResource("5_tbgi4")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-
-[node name="CurrentTurnTitle" type="Label" parent="LevelContainer/PanelContainer/MarginContainer/PanelContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
-size_flags_vertical = 1
-text = "TURN TITLE"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
 
 [node name="MarginContainer" type="MarginContainer" parent="LevelContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
@@ -535,157 +556,18 @@ theme_override_font_sizes/font_size = 24
 text = "QUIT
 "
 
-[node name="TurnDescriptionsScreen" type="PanelContainer" parent="."]
+[node name="CardInfoScreen" parent="." instance=ExtResource("6_tefeu")]
 unique_name_in_owner = true
 visible = false
 z_index = 2
-offset_right = 1152.0
-offset_bottom = 648.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_tbgi4")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TurnDescriptionsScreen"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="MarginTop" type="Control" parent="TurnDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="TurnDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-theme = SubResource("Theme_tbgi4")
-text = "obstacles"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="Spacer" type="Control" parent="TurnDescriptionsScreen/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TurnDescriptionsContainer" type="HBoxContainer" parent="TurnDescriptionsScreen/VBoxContainer/Spacer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 144)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = -72.0
-offset_bottom = 72.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 48
-
-[node name="TurnDescriptionsCloseButton" type="Button" parent="TurnDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(216, 96)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("1_o5qli")
-text = "CLOSE"
-
-[node name="Spacer3" type="Control" parent="TurnDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-
-[node name="ItemDescriptionsScreen" type="PanelContainer" parent="."]
-unique_name_in_owner = true
-visible = false
-z_index = 2
-offset_right = 1152.0
-offset_bottom = 648.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_tbgi4")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ItemDescriptionsScreen"]
-layout_mode = 2
-
-[node name="MarginTop" type="Control" parent="ItemDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="ItemDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-theme = SubResource("Theme_tbgi4")
-text = "items"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="Spacer" type="Control" parent="ItemDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ItemDescriptionsContainer" type="HBoxContainer" parent="ItemDescriptionsScreen/VBoxContainer/Spacer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 144)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = -72.0
-offset_bottom = 72.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 48
-
-[node name="ItemDescriptionsCloseButton" type="Button" parent="ItemDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(216, 96)
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("1_o5qli")
-text = "CLOSE"
-
-[node name="Spacer3" type="Control" parent="ItemDescriptionsScreen/VBoxContainer"]
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-
-[node name="CardDescriptionsButtonContainer" type="MarginContainer" parent="."]
-unique_name_in_owner = true
-visible = false
-z_index = 2
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-mouse_filter = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_right = 24
-
-[node name="ItemDescriptionsButton" type="Button" parent="CardDescriptionsButtonContainer"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-text = "i"
-
-[node name="TurnDescriptionsButton" type="Button" parent="CardDescriptionsButtonContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-text = "i"
-autowrap_mode = 3
 
 [connection signal="pressed" from="ItemSelectionContainer/VBoxContainer/ItemConfirmedButton" to="." method="_on_item_confirmed_button_pressed"]
+[connection signal="pressed" from="ItemSelectionContainer/DescriptionsButtonContainer/DescriptionsButton" to="." method="_on_descriptions_button_pressed"]
+[connection signal="pressed" from="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/DescriptionsButton" to="." method="_on_descriptions_button_pressed"]
 [connection signal="toggled" from="LevelContainer/MarginContainer/HBoxContainer/PedalButton" to="." method="_on_pedal_button_toggled"]
 [connection signal="toggled" from="LevelContainer/MarginContainer/HBoxContainer/BoostButton" to="." method="_on_boost_button_toggled"]
 [connection signal="pressed" from="LevelContainer/MarginContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="GameStartContainer/MarginContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="TurnDescriptionsScreen/VBoxContainer/TurnDescriptionsCloseButton" to="." method="_on_turn_descriptions_close_button_pressed"]
-[connection signal="pressed" from="ItemDescriptionsScreen/VBoxContainer/ItemDescriptionsCloseButton" to="." method="_on_item_descriptions_close_button_pressed"]
-[connection signal="pressed" from="CardDescriptionsButtonContainer/ItemDescriptionsButton" to="." method="_on_item_descriptions_button_pressed"]
-[connection signal="pressed" from="CardDescriptionsButtonContainer/TurnDescriptionsButton" to="." method="_on_turn_descriptions_button_pressed"]
+[connection signal="close_button_pressed" from="CardInfoScreen" to="." method="_on_card_info_screen_close_button_pressed"]

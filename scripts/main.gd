@@ -108,6 +108,7 @@ var turns : Array[Turn] = [
 @onready var item_selection_container: PanelContainer = %ItemSelectionContainer
 @onready var level_container: Control = %LevelContainer
 @onready var game_end_container: PanelContainer = %GameEndContainer
+@onready var card_info_screen: CardInfoScreen = %CardInfoScreen
 
 @onready var items_container: BoxContainer = %ItemsContainer
 @onready var item_confirmed_button: Button = %ItemConfirmedButton
@@ -116,21 +117,13 @@ var turns : Array[Turn] = [
 @onready var battery_label: Label = %BatteryLabel
 @onready var turns_label: Label = %TurnsLabel
 @onready var distance_progress_bar: ProgressBar = %DistanceProgressBar
-@onready var current_turn_title: Label = %CurrentTurnTitle
+@onready var current_turn_card: Card = %CurrentTurnCard
 @onready var current_turn_description: Label= %CurrentTurnDescription
 @onready var next_turn_cards: Array[Card] = [%NextTurnCard, %NextTurnCard2, %NextTurnCard3]
 @onready var selected_item_card: Card = %SelectedItemCard
 @onready var confirm_button: Button = %ConfirmButton
 
 @onready var game_end_label: Label = %GameEndLabel
-
-
-@onready var card_descriptions_button_container: MarginContainer = %CardDescriptionsButtonContainer
-@onready var turn_descriptions_screen: PanelContainer = %TurnDescriptionsScreen
-@onready var turn_descriptions_container: BoxContainer = %TurnDescriptionsContainer
-@onready var item_descriptions_screen: PanelContainer = %ItemDescriptionsScreen
-@onready var item_descriptions_container: BoxContainer = %ItemDescriptionsContainer
-
 
 @onready var action_buttons: Dictionary[Action, Button] = {
 	Action.PEDAL: %PedalButton,
@@ -152,9 +145,6 @@ var turns : Array[Turn] = [
 func _ready() -> void:
 	_initialize_distance_progress_bar()
 	_setup_item_cards()
-	_setup_turn_descriptions()
-	_setup_item_descriptions()
-	card_descriptions_button_container.hide()
 
 
 func _set_current_distance(new_value: int) -> void:
@@ -267,32 +257,13 @@ func _setup_item_cards() -> void:
 		node.card.refresh()
 
 
-func _setup_turn_descriptions() -> void:
-	for item in Turn.values():
-		var scene := load("res://scenes/card.tscn")
-		var node := scene.instantiate() as Card
-		turn_descriptions_container.add_child(node)
-		node.title_text = TURN_TITLES[item]
-		node.description_text = TURN_DESCRIPTIONS[item]
-		node.refresh()
-
-
-func _setup_item_descriptions() -> void:
-	for item in Item.values():
-		var scene := load("res://scenes/card.tscn")
-		var node := scene.instantiate() as Card
-		item_descriptions_container.add_child(node)
-		node.title_text = ITEM_TITLES[item]
-		node.description_text = ITEM_DESCRIPTIONS[item]
-		node.refresh()
-
-
 func _refresh_distance_progress_bar() -> void:
 	distance_progress_bar.value = current_distance
 
 
 func _refresh_turn_info() -> void:
-	current_turn_title.text = TURN_TITLES[turns[current_turn]]
+	current_turn_card.title_text = TURN_TITLES[turns[current_turn]]
+	current_turn_card.refresh()
 	current_turn_description.text = TURN_DESCRIPTIONS[turns[current_turn]]
 
 
@@ -359,7 +330,6 @@ func _on_goal_reached() -> void:
 func _on_final_turn_played() -> void:
 	pedal_enabled = false
 	boost_enabled = false
-	card_descriptions_button_container.hide()
 	game_end_container.show()
 	
  
@@ -407,7 +377,6 @@ func _on_item_selection_changed(button: CardToggleButton) -> void:
 func _on_start_button_pressed() -> void:
 	game_start_container.hide()
 	item_selection_container.show()
-	card_descriptions_button_container.show()
 
 
 func _on_item_confirmed_button_pressed() -> void:
@@ -420,7 +389,6 @@ func _on_restart_button_pressed() -> void:
 	level_container.hide()
 	game_end_container.hide()
 	item_selection_container.show()
-	card_descriptions_button_container.show()
 
 
 func _on_quit_button_pressed() -> void:
@@ -429,19 +397,9 @@ func _on_quit_button_pressed() -> void:
 	game_start_container.show()
 
 
-func _on_turn_descriptions_button_pressed() -> void:
-	item_descriptions_screen.hide()
-	turn_descriptions_screen.show()
+func _on_descriptions_button_pressed() -> void:
+	card_info_screen.show()
 
 
-func _on_turn_descriptions_close_button_pressed() -> void:
-	turn_descriptions_screen.hide()
-
-
-func _on_item_descriptions_button_pressed() -> void:
-	turn_descriptions_screen.hide()
-	item_descriptions_screen.show()
-
-
-func _on_item_descriptions_close_button_pressed() -> void:
-	item_descriptions_screen.hide()
+func _on_card_info_screen_close_button_pressed() -> void:
+	card_info_screen.hide()
