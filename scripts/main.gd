@@ -31,10 +31,17 @@ const TURN_TITLES : Dictionary[Turn, String] = {
 }
 
 const TURN_DESCRIPTIONS : Dictionary[Turn, String] = {
-	Turn.CLEAR: "BOOST = normal distance.\nPEDAL = normal distance.",
-	Turn.ICE: "BOOST = 0 distance (slip).\nPEDAL = normal distance.",
-	Turn.HILL: "PEDAL = half distance.\nBOOST = normal.",
-	Turn.TOURIST: "PEDAL = 0 distance.\nBOOST = normal."
+	Turn.CLEAR: "BOOST = normal distance. PEDAL = normal distance.",
+	Turn.ICE: "BOOST = 0 distance (slip). PEDAL = normal distance.",
+	Turn.HILL: "PEDAL = half distance. BOOST = normal.",
+	Turn.TOURIST: "PEDAL = 0 distance. BOOST = normal."
+}
+
+const TURN_IMAGES: Dictionary[Turn, String] = {
+	Turn.CLEAR: "trail",
+	Turn.ICE: "snowflake-2",
+	Turn.HILL: "hills",
+	Turn.TOURIST: "walk"
 }
 
 const ITEM_TITLES: Dictionary[Item, String] = {
@@ -47,6 +54,12 @@ const ITEM_DESCRIPTIONS: Dictionary[Item, String] = {
 	Item.HAIR_DRYER: "ICE: BOOST works normally",
 	Item.FIRE_ALARM: "TOURIST: PEDAL works normally",
 	Item.BLENDER_MOTOR: "HILL: PEDAL works normally"
+}
+
+const ITEM_IMAGES: Dictionary[Item, String] = {
+	Item.HAIR_DRYER: "computer-fan",
+	Item.FIRE_ALARM: "movement-sensor",
+	Item.BLENDER_MOTOR: "blender"
 }
 
 const DISTANCES_PER_PEDAL: Dictionary[Turn, int] = {
@@ -260,6 +273,7 @@ func _setup_item_cards() -> void:
 		node.button_group = items_button_group
 		node.card.title_text = ITEM_TITLES[item]
 		node.card.description_text = ITEM_DESCRIPTIONS[item]
+		node.card.image_filename = ITEM_IMAGES[item]
 		node.card.refresh()
 
 
@@ -277,6 +291,7 @@ func _refresh_turns_progress_bar() -> void:
 
 func _refresh_turn_info() -> void:
 	current_turn_card.title_text = TURN_TITLES[turns[current_turn]]
+	current_turn_card.image_filename = TURN_IMAGES[turns[current_turn]]
 	current_turn_card.refresh()
 	current_turn_description.text = TURN_DESCRIPTIONS[turns[current_turn]]
 
@@ -297,8 +312,10 @@ func _refresh_next_turns() -> void:
 
 		if next_turn >= turns.size():
 			next_turn_cards[next_turn_difference].title_text = ""
+			next_turn_cards[next_turn_difference].image_filename = ""
 		else:
 			next_turn_cards[next_turn_difference].title_text = TURN_TITLES[turns[next_turn]]
+			next_turn_cards[next_turn_difference].image_filename = TURN_IMAGES[turns[next_turn]]
 		
 		next_turn_cards[next_turn_difference].refresh()
 
@@ -306,6 +323,7 @@ func _refresh_next_turns() -> void:
 func _refresh_selected_item_card() -> void:
 	selected_item_card.title_text = ITEM_TITLES[selected_item]
 	selected_item_card.description_text = ITEM_DESCRIPTIONS[selected_item]
+	selected_item_card.image_filename = ITEM_IMAGES[selected_item]
 	selected_item_card.refresh()
 
 

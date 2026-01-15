@@ -22,7 +22,6 @@ script = ExtResource("1_0wfyh")
 
 [node name="ItemSelectionContainer" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_type_variation = &"Background"
 
@@ -114,6 +113,7 @@ theme_override_constants/margin_right = 24
 
 [node name="LevelContainer" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="LevelContainer"]
@@ -557,7 +557,6 @@ text = "BOOST"
 
 [node name="GameStartContainer" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_type_variation = &"Background"
 

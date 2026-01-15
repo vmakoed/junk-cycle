@@ -1,12 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://2xi5ammjlwcd"]
+[gd_scene load_steps=5 format=3 uid="uid://2xi5ammjlwcd"]
 
 [ext_resource type="Script" uid="uid://c3fbl0kvvfx1r" path="res://scripts/card.gd" id="1_6u4wf"]
 [ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_ktuci"]
+[ext_resource type="Texture2D" uid="uid://d01c6u1rn7nc1" path="res://resources/trail.svg" id="3_ktuci"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kg30u"]
+line_spacing = 0.0
+font_color = Color(0.98039216, 0.88235295, 0.7294118, 1)
 
 [node name="Card" type="PanelContainer"]
 custom_minimum_size = Vector2(96, 144)
 offset_right = 96.0
-offset_bottom = 152.0
+offset_bottom = 144.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 mouse_filter = 1
 theme = ExtResource("1_ktuci")
 theme_type_variation = &"CardSmall"
@@ -21,15 +28,46 @@ theme_override_constants/margin_bottom = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 6
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+theme_type_variation = &"DarkPanelSharp"
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_type_variation = &"DarkPanelSharp"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Control/PanelContainer"]
+unique_name_in_owner = true
+modulate = Color(0.98039216, 0.88235295, 0.7294118, 1)
+layout_mode = 2
+texture = ExtResource("3_ktuci")
+expand_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_type_variation = &"CurrentTurnPanel"
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
-theme_type_variation = &"LabelDark"
-text = "Card title"
+theme_type_variation = &"LabelLight"
+text = "CLEAR road"
+label_settings = SubResource("LabelSettings_kg30u")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
