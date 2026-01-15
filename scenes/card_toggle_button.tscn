@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://cc4ds6l5vfo8t" path="res://scenes/card_medium.tscn" id="2_du7xk"]
 
 [node name="CardToggleButton" type="Button"]
-custom_minimum_size = Vector2(144, 216)
-offset_right = 8.0
-offset_bottom = 8.0
+custom_minimum_size = Vector2(168, 240)
+offset_right = 144.0
+offset_bottom = 216.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 toggle_mode = true
@@ -15,3 +15,5 @@ script = ExtResource("1_du7xk")
 [node name="Card" parent="." instance=ExtResource("2_du7xk")]
 unique_name_in_owner = true
 layout_mode = 0
+offset_right = 144.0
+offset_bottom = 216.0

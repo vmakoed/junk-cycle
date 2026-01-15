@@ -3,7 +3,7 @@ extends Node
 
 const DISTANCE_LABEL_TEXT = "Distance: {current_distance}/{distance_goal}m"
 const BATTERY_LABEL_TEXT = "{current_battery}%"
-const TURNS_LABEL_TEXT = "{current_turn}/{total_turns}"
+const TURNS_LABEL_TEXT = "{turns_left}/{total_turns}"
 const ACTION_INFO_DISTANCE_TEXT = "+{distance_change}m."
 const ACTION_INFO_BATTERY_TEXT = "-{battery_change}% batt."
 const WIN_TEXT = "You win!"
@@ -11,7 +11,7 @@ const GAME_OVER_TEXT = "Game over"
 
 
 const DISTANCE_MIN = 0
-const DISTANCE_GOAL = 1200
+const DISTANCE_GOAL = 1500
 const BATTERY_MAX = 100
 const BATTERY_MIN = 0
 const TURNS_MIN = 0
@@ -74,7 +74,6 @@ var current_battery: int: set = _set_current_battery
 var current_turn: int: set = _set_current_turn
 var pedal_enabled: bool: set = _set_pedal_enabled
 var boost_enabled: bool: set = _set_boost_enabled
-var selected_action: set = _set_selected_action
 var selected_item: set = _set_selected_item
 var items_button_group : ButtonGroup
 var distance_per_action: Dictionary[Action, int]
@@ -114,8 +113,13 @@ var turns : Array[Turn] = [
 @onready var item_confirmed_button: Button = %ItemConfirmedButton
 
 @onready var distance_label: Label = %DistanceLabel
+
 @onready var battery_label: Label = %BatteryLabel
+@onready var battery_progress_bar: ProgressBar = %BatteryProgressBar
+
 @onready var turns_label: Label = %TurnsLabel
+@onready var turns_progress_bar: ProgressBar = %TurnsProgressBar
+
 @onready var distance_progress_bar: ProgressBar = %DistanceProgressBar
 @onready var current_turn_card: Card = %CurrentTurnCard
 @onready var current_turn_description: Label= %CurrentTurnDescription
@@ -130,20 +134,24 @@ var turns : Array[Turn] = [
 	Action.BOOST: %BoostButton
 } 
 
+@onready var action_containers: Dictionary[Action, BoxContainer] = {
+	Action.PEDAL: %PedalContainer,
+	Action.BOOST: %BoostContainer
+}
 
 @onready var distance_labels : Dictionary[Action, Label] = {
-	Action.PEDAL: action_buttons[Action.PEDAL].find_child("DistanceLabel"),
-	Action.BOOST: action_buttons[Action.BOOST].find_child("DistanceLabel")
+	Action.PEDAL: action_containers[Action.PEDAL].find_child("DistanceLabel"),
+	Action.BOOST: action_containers[Action.BOOST].find_child("DistanceLabel")
 }
 
 @onready var battery_labels : Dictionary[Action, Label] = {
-	Action.PEDAL: action_buttons[Action.PEDAL].find_child("BatteryLabel"),
-	Action.BOOST: action_buttons[Action.BOOST].find_child("BatteryLabel")
+	Action.PEDAL: action_containers[Action.PEDAL].find_child("BatteryLabel"),
+	Action.BOOST: action_containers[Action.BOOST].find_child("BatteryLabel")
 }
 
 
 func _ready() -> void:
-	_initialize_distance_progress_bar()
+	_initialize_progress_bars()
 	_setup_item_cards()
 
 
@@ -158,6 +166,7 @@ func _set_current_distance(new_value: int) -> void:
 func _set_current_battery(new_value: int) -> void:
 	current_battery = clamp(new_value, BATTERY_MIN, BATTERY_MAX)
 	_refresh_battery_label()
+	_refresh_battery_progress_bar()
 
 	if _is_goal_reached(): return
 	if (current_battery < BATTERY_DRAIN_PER_ACTION[Action.BOOST]):
@@ -173,7 +182,8 @@ func _set_current_turn(new_value: int) -> void:
 		current_turn = clamp(new_value, TURNS_MIN, turns.size() - 1)
 		_apply_turn_effects()
 		
-	_refresh_turn_label()
+	_refresh_turns_label()
+	_refresh_turns_progress_bar()
 	_refresh_turn_info()
 	_refresh_action_info()
 	_refresh_next_turns()
@@ -183,22 +193,10 @@ func _set_pedal_enabled(new_value: bool) -> void:
 	pedal_enabled = new_value
 	action_buttons[Action.PEDAL].disabled = not pedal_enabled
 
-	if not pedal_enabled and selected_action == Action.PEDAL:
-		action_buttons[Action.PEDAL].button_pressed = false
-
 
 func _set_boost_enabled(new_value: bool) -> void:
 	boost_enabled = new_value
-
-	if not boost_enabled and selected_action == Action.BOOST:
-		action_buttons[Action.BOOST].button_pressed = false
-
 	action_buttons[Action.BOOST].disabled = not boost_enabled
-
-	
-func _set_selected_action(new_value) -> void:
-	selected_action = new_value
-	confirm_button.disabled = new_value == null
 
 
 func _set_selected_item(new_value) -> void:
@@ -231,16 +229,24 @@ func _refresh_battery_label() -> void:
 	})
 
 
-func _refresh_turn_label() -> void:
+func _refresh_turns_label() -> void:
 	turns_label.text = TURNS_LABEL_TEXT.format({
-		"current_turn": current_turn + 1,
+		"turns_left": _turns_left(),
 		"total_turns": turns.size()
 	})
 
 
-func _initialize_distance_progress_bar() -> void:
+func _turns_left() -> int:
+	return turns.size() - current_turn
+
+
+func _initialize_progress_bars() -> void:
 	distance_progress_bar.min_value = DISTANCE_MIN
 	distance_progress_bar.max_value = DISTANCE_GOAL
+	turns_progress_bar.max_value = turns.size()
+	turns_progress_bar.min_value = TURNS_MIN
+	battery_progress_bar.max_value = BATTERY_MAX
+	battery_progress_bar.min_value = BATTERY_MIN
 
 
 func _setup_item_cards() -> void:
@@ -259,6 +265,14 @@ func _setup_item_cards() -> void:
 
 func _refresh_distance_progress_bar() -> void:
 	distance_progress_bar.value = current_distance
+
+
+func _refresh_battery_progress_bar() -> void:
+	battery_progress_bar.value = current_battery
+
+
+func _refresh_turns_progress_bar() -> void:
+	turns_progress_bar.value = _turns_left()
 
 
 func _refresh_turn_info() -> void:
@@ -334,40 +348,17 @@ func _on_final_turn_played() -> void:
 	
  
 func _resolve_turn(movement: Action) -> void: 
-	match movement:
-		Action.PEDAL: 
-			current_distance += distance_per_action[Action.PEDAL]
-		Action.BOOST: 
-			current_distance += distance_per_action[Action.BOOST]
-			current_battery -= BATTERY_DRAIN_PER_ACTION[Action.BOOST]
-
+	current_distance += distance_per_action[movement]
+	current_battery -= BATTERY_DRAIN_PER_ACTION[movement]
 	current_turn += TURNS_PER_MOVEMENT
 
 
-func _assign_selected_action(action: Action, toggled_on: bool) -> void:
-	if toggled_on:
-		selected_action = action
-	elif selected_action == action:
-		selected_action = null
+func _on_pedal_button_pressed() -> void:
+	_resolve_turn(Action.PEDAL)
 
 
-func _refresh_other_buttons(another_action: Action, toggled_on: bool) -> void:
-	if toggled_on and action_buttons[another_action].button_pressed:
-		action_buttons[another_action].button_pressed = false
-
-
-func _on_pedal_button_toggled(toggled_on: bool) -> void:
-	_assign_selected_action(Action.PEDAL, toggled_on)
-	_refresh_other_buttons(Action.BOOST, toggled_on)
-
-
-func _on_boost_button_toggled(toggled_on: bool) -> void:
-	_assign_selected_action(Action.BOOST, toggled_on)
-	_refresh_other_buttons(Action.PEDAL, toggled_on)
-
-
-func _on_confirm_button_pressed() -> void:
-	_resolve_turn(selected_action)
+func _on_boost_button_pressed() -> void:
+	_resolve_turn(Action.BOOST)
 
 
 func _on_item_selection_changed(button: CardToggleButton) -> void:

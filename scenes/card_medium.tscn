@@ -1,13 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://cc4ds6l5vfo8t"]
 
 [ext_resource type="Script" uid="uid://c3fbl0kvvfx1r" path="res://scripts/card.gd" id="1_3a6fc"]
-[ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/text_md.tres" id="2_cpci8"]
+[ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_mq11l"]
 
 [node name="CardMedium" type="PanelContainer"]
-custom_minimum_size = Vector2(144, 216)
+custom_minimum_size = Vector2(168, 240)
 offset_right = 96.0
 offset_bottom = 152.0
 mouse_filter = 1
+theme = ExtResource("1_mq11l")
+theme_type_variation = &"CardMedium"
 script = ExtResource("1_3a6fc")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -26,7 +28,7 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
-theme = ExtResource("2_cpci8")
+theme_type_variation = &"LabelDark"
 text = "Card title"
 horizontal_alignment = 1
 vertical_alignment = 1
