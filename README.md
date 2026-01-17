@@ -9,3 +9,8 @@ https://game-icons.net/
 - [Caro Asercion](https://game-icons.net/)
 - [delapouite](https://delapouite.com/)
 - [lorc](lorcblog)
+
+## Sounds
+https://freesound.org/
+
+- [Eelke](https://freesound.org/people/Eelke/)

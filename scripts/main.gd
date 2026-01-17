@@ -161,6 +161,20 @@ var turns : Array[Turn] = [
 	Action.BOOST: action_containers[Action.BOOST].find_child("BatteryLabel")
 }
 
+@onready var button_audio_player: AudioStreamPlayer = %ButtonAudioPlayer
+
+@onready var action_audio_layers: Dictionary[Action, AudioStreamPlayer] = {
+	Action.PEDAL: action_containers[Action.PEDAL].find_child("AudioStreamPlayer"),
+	Action.BOOST: action_containers[Action.BOOST].find_child("AudioStreamPlayer"),
+}
+
+@onready var item_audio_players: Dictionary[Item, AudioStreamPlayer] = { 
+	Item.HAIR_DRYER: %HairDryerAudioPlayer,
+	Item.FIRE_ALARM: %FireAlarmAudioPlayer,
+	Item.BLENDER_MOTOR: %BlenderMotorAudioPlayer
+}
+
+
 func _ready() -> void:
 	_initialize_progress_bars()
 	_setup_item_cards()
@@ -203,18 +217,32 @@ func _set_current_turn(new_value: int) -> void:
 
 func _set_pedal_enabled(new_value: bool) -> void:
 	pedal_enabled = new_value
-	action_buttons[Action.PEDAL].disabled = not pedal_enabled
+
+	if pedal_enabled:
+		action_buttons[Action.PEDAL].disabled = false
+		action_buttons[Action.PEDAL].focus_mode = Control.FOCUS_ALL
+	else:
+		action_buttons[Action.PEDAL].disabled = true
+		action_buttons[Action.PEDAL].focus_mode = Control.FOCUS_NONE
 
 
 func _set_boost_enabled(new_value: bool) -> void:
 	boost_enabled = new_value
-	action_buttons[Action.BOOST].disabled = not boost_enabled
+
+	if boost_enabled:
+		action_buttons[Action.BOOST].disabled = false
+		action_buttons[Action.BOOST].focus_mode = Control.FOCUS_ALL
+	else:
+		action_buttons[Action.BOOST].disabled = true
+		action_buttons[Action.BOOST].focus_mode = Control.FOCUS_NONE
 
 
 func _set_selected_item(new_value) -> void:
 	selected_item = new_value
 	item_confirmed_button.disabled = selected_item == null
-	if selected_item != null: _refresh_selected_item_card()
+	if selected_item != null:
+		item_audio_players[selected_item].play()
+		_refresh_selected_item_card()
 
 
 func _reset_state() -> void:
@@ -330,15 +358,19 @@ func _apply_turn_effects() -> void:
 
 
 func _apply_pedal_effect() -> void:
-	if (selected_item == Item.FIRE_ALARM and turns[current_turn] == Turn.TOURIST) or \
-		(selected_item == Item.BLENDER_MOTOR and turns[current_turn] == Turn.HILL):
-			distance_per_action[Action.PEDAL] = DISTANCES_PER_PEDAL[Turn.CLEAR]
+	if (selected_item == Item.FIRE_ALARM and turns[current_turn] == Turn.TOURIST):
+		item_audio_players[Item.FIRE_ALARM].play()
+		distance_per_action[Action.PEDAL] = DISTANCES_PER_PEDAL[Turn.CLEAR]
+	elif (selected_item == Item.BLENDER_MOTOR and turns[current_turn] == Turn.HILL):
+		item_audio_players[Item.BLENDER_MOTOR].play()
+		distance_per_action[Action.PEDAL] = DISTANCES_PER_PEDAL[Turn.CLEAR]
 	else:
 		distance_per_action[Action.PEDAL] = DISTANCES_PER_PEDAL[turns[current_turn]]
 
 
 func _apply_boost_effect() -> void:
 	if (selected_item == Item.HAIR_DRYER and turns[current_turn] == Turn.ICE):
+		item_audio_players[Item.HAIR_DRYER].play()
 		distance_per_action[Action.BOOST] = DISTANCES_PER_BOOST[Turn.CLEAR]
 	else:
 		distance_per_action[Action.BOOST] = DISTANCES_PER_BOOST[turns[current_turn]]
@@ -370,10 +402,12 @@ func _resolve_turn(movement: Action) -> void:
 
 func _on_pedal_button_pressed() -> void:
 	_resolve_turn(Action.PEDAL)
+	action_audio_layers[Action.PEDAL].play()
 
 
 func _on_boost_button_pressed() -> void:
 	_resolve_turn(Action.BOOST)
+	action_audio_layers[Action.BOOST].play()
 
 
 func _on_item_selection_changed(button: CardToggleButton) -> void:
@@ -383,6 +417,10 @@ func _on_item_selection_changed(button: CardToggleButton) -> void:
 func _on_start_button_pressed() -> void:
 	game_start_container.hide()
 	item_selection_container.show()
+
+
+func _on_ui_button_pressed() -> void:
+	button_audio_player.play()
 
 
 func _on_item_confirmed_button_pressed() -> void:
