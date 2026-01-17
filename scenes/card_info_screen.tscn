@@ -1,11 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://cgs54jmueouap"]
 
-[ext_resource type="PackedScene" uid="uid://2xi5ammjlwcd" path="res://scenes/card.tscn" id="1_8w2rs"]
+[ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_j36cb"]
 [ext_resource type="Script" uid="uid://bxvaeiieiw5mi" path="res://scripts/card_info_screen.gd" id="1_qgqy1"]
 [ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/text_md.tres" id="3_qfejm"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfejm"]
-bg_color = Color(0.19, 0.19, 0.19, 1)
+[ext_resource type="Texture2D" uid="uid://bl3233l58tgod" path="res://resources/cancel.svg" id="5_3ww0p"]
 
 [node name="CardInfoScreen" type="PanelContainer"]
 anchors_preset = 15
@@ -13,7 +11,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_qfejm")
+theme = ExtResource("1_j36cb")
+theme_type_variation = &"Background"
 script = ExtResource("1_qgqy1")
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
@@ -25,99 +24,9 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-theme_override_constants/h_separation = 36
+theme_override_constants/h_separation = 72
 theme_override_constants/v_separation = 36
 columns = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/CardsGrid"]
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="Card" parent="MarginContainer2/CardsGrid/HBoxContainer" instance=ExtResource("1_8w2rs")]
-layout_mode = 2
-
-[node name="Description" type="Label" parent="MarginContainer2/CardsGrid/HBoxContainer"]
-custom_minimum_size = Vector2(384, 0)
-layout_mode = 2
-size_flags_vertical = 1
-text = "Card description goes here"
-vertical_alignment = 1
-autowrap_trim_flags = 128
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer2/CardsGrid"]
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="Card" parent="MarginContainer2/CardsGrid/HBoxContainer2" instance=ExtResource("1_8w2rs")]
-layout_mode = 2
-
-[node name="Description" type="Label" parent="MarginContainer2/CardsGrid/HBoxContainer2"]
-custom_minimum_size = Vector2(384, 0)
-layout_mode = 2
-size_flags_vertical = 1
-text = "Card description goes here"
-vertical_alignment = 1
-autowrap_trim_flags = 128
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer2/CardsGrid"]
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="Card" parent="MarginContainer2/CardsGrid/HBoxContainer3" instance=ExtResource("1_8w2rs")]
-layout_mode = 2
-
-[node name="Description" type="Label" parent="MarginContainer2/CardsGrid/HBoxContainer3"]
-custom_minimum_size = Vector2(384, 0)
-layout_mode = 2
-size_flags_vertical = 1
-text = "Card description goes here"
-vertical_alignment = 1
-autowrap_trim_flags = 128
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer2/CardsGrid"]
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="Card" parent="MarginContainer2/CardsGrid/HBoxContainer4" instance=ExtResource("1_8w2rs")]
-layout_mode = 2
-
-[node name="Description" type="Label" parent="MarginContainer2/CardsGrid/HBoxContainer4"]
-custom_minimum_size = Vector2(384, 0)
-layout_mode = 2
-size_flags_vertical = 1
-text = "Card description goes here"
-vertical_alignment = 1
-autowrap_trim_flags = 128
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer2/CardsGrid"]
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="Card" parent="MarginContainer2/CardsGrid/HBoxContainer5" instance=ExtResource("1_8w2rs")]
-layout_mode = 2
-
-[node name="Description" type="Label" parent="MarginContainer2/CardsGrid/HBoxContainer5"]
-custom_minimum_size = Vector2(384, 0)
-layout_mode = 2
-size_flags_vertical = 1
-text = "Card description goes here"
-vertical_alignment = 1
-autowrap_trim_flags = 128
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer2/CardsGrid"]
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="Card" parent="MarginContainer2/CardsGrid/HBoxContainer6" instance=ExtResource("1_8w2rs")]
-layout_mode = 2
-
-[node name="Description" type="Label" parent="MarginContainer2/CardsGrid/HBoxContainer6"]
-custom_minimum_size = Vector2(384, 0)
-layout_mode = 2
-size_flags_vertical = 1
-text = "Card description goes here"
-vertical_alignment = 1
-autowrap_trim_flags = 128
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -130,6 +39,33 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme = ExtResource("3_qfejm")
-text = "X"
+theme_type_variation = &"ButtonYellow"
+
+[node name="Control" type="Control" parent="MarginContainer/CloseButton"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/CloseButton/Control"]
+modulate = Color(0.25882354, 0.27058825, 0.3372549, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_3ww0p")
+expand_mode = 5
 
 [connection signal="pressed" from="MarginContainer/CloseButton" to="." method="_on_close_button_pressed"]

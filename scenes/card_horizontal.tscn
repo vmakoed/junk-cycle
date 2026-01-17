@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2e1giqnr04fw"]
+
+[ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_b2311"]
+[ext_resource type="Script" uid="uid://d3n54gcekhrcp" path="res://scripts/card_horizonal.gd" id="2_m4n56"]
+[ext_resource type="PackedScene" uid="uid://2xi5ammjlwcd" path="res://scenes/card.tscn" id="3_acl7d"]
+
+[node name="CardHorizontal" type="PanelContainer"]
+theme = ExtResource("1_b2311")
+theme_type_variation = &"CurrentTurnPanel"
+script = ExtResource("2_m4n56")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Card" parent="HBoxContainer" instance=ExtResource("3_acl7d")]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(288, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"LabelLight"
+text = "Card description goes here"
+vertical_alignment = 1
+autowrap_trim_flags = 128

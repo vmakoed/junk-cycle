@@ -12,6 +12,7 @@ const IMAGE_PATH = "res://resources/{filename}.svg"
 
 @onready var title: Label = %Title
 @onready var image: TextureRect = %TextureRect
+@onready var contents_container: VBoxContainer = %ContentsContainer
 
 
 func _ready() -> void:
@@ -20,6 +21,23 @@ func _ready() -> void:
 
 func refresh() -> void:
 	title.text = title_text
-	image.texture = load(IMAGE_PATH.format({
-		"filename": image_filename
-	}))
+	
+	if image_filename:
+		image.texture = load(IMAGE_PATH.format({
+			"filename": image_filename
+		}))
+	else:
+		image.texture = null
+
+	contents_container.show()
+
+
+func clear() -> void:
+	title_text = ""
+	description_text = ""
+	image_filename = ""
+
+	title.text = ""
+	image.texture = null
+
+	contents_container.hide()	

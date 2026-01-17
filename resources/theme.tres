@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=21 format=3 uid="uid://gy415apsmw3w"]
+[gd_resource type="Theme" load_steps=25 format=3 uid="uid://gy415apsmw3w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tekt2"]
 bg_color = Color(0.69, 0.62123, 0.51060003, 1)
@@ -40,6 +40,8 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tekt2"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aaf3v"]
 bg_color = Color(0.99607843, 0.68235296, 0, 1)
 border_width_left = 3
@@ -76,12 +78,22 @@ corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vjy4"]
+bg_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5sbq"]
 bg_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
 corner_radius_top_left = 14
 corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5jkt"]
+bg_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ogd5j"]
 bg_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
@@ -125,6 +137,8 @@ border_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
 bg_color = Color(0.4392157, 0.67058825, 0.54901963, 1)
 border_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d4nwg"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbyuf"]
 bg_color = Color(0.81960785, 0.7372549, 0.60784316, 1)
 border_width_left = 4
@@ -151,6 +165,8 @@ ButtonPanel/base_type = &"PanelContainer"
 ButtonPanel/styles/panel = SubResource("StyleBoxFlat_1bvpa")
 ButtonPedal/base_type = &"Button"
 ButtonPedal/styles/normal = SubResource("StyleBoxFlat_owntx")
+ButtonTransparent/base_type = &"Button"
+ButtonTransparent/styles/normal = SubResource("StyleBoxEmpty_tekt2")
 ButtonYellow/base_type = &"Button"
 ButtonYellow/colors/font_color = Color(0.25882354, 0.27058825, 0.3372549, 1)
 ButtonYellow/styles/normal = SubResource("StyleBoxFlat_aaf3v")
@@ -160,8 +176,12 @@ CardSmall/base_type = &"PanelContainer"
 CardSmall/styles/panel = SubResource("StyleBoxFlat_yp2uj")
 CardText/base_type = &"Label"
 CardText/colors/font_color = Color(0.9882353, 0.88235295, 0.7137255, 1)
+CardToggleButton/base_type = &"Button"
+CardToggleButton/styles/normal = SubResource("StyleBoxFlat_5vjy4")
 CurrentTurnPanel/base_type = &"PanelContainer"
 CurrentTurnPanel/styles/panel = SubResource("StyleBoxFlat_j5sbq")
+DarkPanelBorderless/base_type = &"PanelContainer"
+DarkPanelBorderless/styles/panel = SubResource("StyleBoxFlat_x5jkt")
 DarkPanelSharp/base_type = &"PanelContainer"
 DarkPanelSharp/styles/panel = SubResource("StyleBoxFlat_ogd5j")
 DistanceProgress/base_type = &"ProgressBar"
@@ -180,6 +200,8 @@ MiddlePanel/styles/panel = SubResource("StyleBoxFlat_d4nwg")
 MoveProgress/base_type = &"ProgressBar"
 MoveProgress/styles/background = SubResource("StyleBoxFlat_iehnn")
 MoveProgress/styles/fill = SubResource("StyleBoxFlat_ouajo")
+PanelTransparent/base_type = &"PanelContainer"
+PanelTransparent/styles/panel = SubResource("StyleBoxEmpty_d4nwg")
 ResourcesPanel/base_type = &"PanelContainer"
 ResourcesPanel/styles/panel = SubResource("StyleBoxFlat_lbyuf")
 VerticalPanel/base_type = &"PanelContainer"

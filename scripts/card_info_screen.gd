@@ -9,6 +9,9 @@ enum Turn { CLEAR, ICE, HILL, TOURIST }
 enum Item { HAIR_DRYER, FIRE_ALARM, BLENDER_MOTOR }
 
 
+const CARDS_COUNT = 6
+
+
 const TURN_TITLES : Dictionary[Turn, String] = {
 	Turn.CLEAR: "Clear road",
 	Turn.ICE: "Ice",
@@ -52,6 +55,7 @@ const ITEM_IMAGES: Dictionary[Item, String] = {
 
 
 func _ready() -> void:
+	_create_cards()
 	_assign_card(0, TURN_TITLES[Turn.ICE], TURN_DESCRIPTIONS[Turn.ICE], TURN_IMAGES[Turn.ICE])
 	_assign_card(1, ITEM_TITLES[Item.HAIR_DRYER], ITEM_DESCRIPTIONS[Item.HAIR_DRYER], ITEM_IMAGES[Item.HAIR_DRYER])
 	_assign_card(2, TURN_TITLES[Turn.TOURIST], TURN_DESCRIPTIONS[Turn.TOURIST], TURN_IMAGES[Turn.TOURIST])
@@ -60,8 +64,14 @@ func _ready() -> void:
 	_assign_card(5, ITEM_TITLES[Item.BLENDER_MOTOR], ITEM_DESCRIPTIONS[Item.BLENDER_MOTOR], ITEM_IMAGES[Item.BLENDER_MOTOR])
 
 
+func _create_cards() -> void:
+	for card_index in CARDS_COUNT:
+		var scene := load("res://scenes/card_horizontal.tscn")
+		var node := scene.instantiate() as CardHorizontal
+		cards_grid.add_child(node)
+
 func _assign_card(index: int, title_text: String, description_text: String, image_filename: String) -> void:
-	var container: HBoxContainer = cards_grid.get_child(index)
+	var container: HBoxContainer = cards_grid.get_child(index).get_child(0)
 	var card: Card = container.get_child(0)
 	var description: Label = container.get_child(1)
 	card.title_text = title_text

@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://2xi5ammjlwcd"]
+[gd_scene load_steps=6 format=3 uid="uid://2xi5ammjlwcd"]
 
 [ext_resource type="Script" uid="uid://c3fbl0kvvfx1r" path="res://scripts/card.gd" id="1_6u4wf"]
 [ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_ktuci"]
 [ext_resource type="Texture2D" uid="uid://d01c6u1rn7nc1" path="res://resources/trail.svg" id="3_ktuci"]
 
+[sub_resource type="FontVariation" id="FontVariation_ktuci"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_kg30u"]
-line_spacing = 0.0
+line_spacing = -4.0
+font = SubResource("FontVariation_ktuci")
 font_color = Color(0.98039216, 0.88235295, 0.7294118, 1)
 
 [node name="Card" type="PanelContainer"]
@@ -21,23 +24,21 @@ script = ExtResource("1_6u4wf")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="ContentsContainer" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(72, 72)
+[node name="Control" type="Control" parent="MarginContainer/ContentsContainer"]
+custom_minimum_size = Vector2(78, 78)
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 1
 theme_type_variation = &"DarkPanelSharp"
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/Control"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/ContentsContainer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,22 +48,26 @@ grow_vertical = 2
 mouse_filter = 1
 theme_type_variation = &"DarkPanelSharp"
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Control/PanelContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/ContentsContainer/Control/PanelContainer"]
 unique_name_in_owner = true
 modulate = Color(0.98039216, 0.88235295, 0.7294118, 1)
 layout_mode = 2
 texture = ExtResource("3_ktuci")
 expand_mode = 5
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/ContentsContainer"]
+custom_minimum_size = Vector2(78, 42)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 mouse_filter = 1
-theme_type_variation = &"CurrentTurnPanel"
+theme_type_variation = &"DarkPanelBorderless"
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer"]
+[node name="Title" type="Label" parent="MarginContainer/ContentsContainer/PanelContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 48)
+custom_minimum_size = Vector2(0, 33)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 mouse_filter = 1
 theme_type_variation = &"LabelLight"

@@ -138,7 +138,6 @@ var turns : Array[Turn] = [
 @onready var current_turn_description: Label= %CurrentTurnDescription
 @onready var next_turn_cards: Array[Card] = [%NextTurnCard, %NextTurnCard2, %NextTurnCard3]
 @onready var selected_item_card: Card = %SelectedItemCard
-@onready var confirm_button: Button = %ConfirmButton
 
 @onready var game_end_label: Label = %GameEndLabel
 
@@ -152,16 +151,15 @@ var turns : Array[Turn] = [
 	Action.BOOST: %BoostContainer
 }
 
-@onready var distance_labels : Dictionary[Action, Label] = {
+@onready var distance_labels: Dictionary[Action, Label] = {
 	Action.PEDAL: action_containers[Action.PEDAL].find_child("DistanceLabel"),
 	Action.BOOST: action_containers[Action.BOOST].find_child("DistanceLabel")
 }
 
-@onready var battery_labels : Dictionary[Action, Label] = {
+@onready var battery_labels: Dictionary[Action, Label] = {
 	Action.PEDAL: action_containers[Action.PEDAL].find_child("BatteryLabel"),
 	Action.BOOST: action_containers[Action.BOOST].find_child("BatteryLabel")
 }
-
 
 func _ready() -> void:
 	_initialize_progress_bars()
@@ -189,17 +187,18 @@ func _set_current_battery(new_value: int) -> void:
 
 
 func _set_current_turn(new_value: int) -> void:
-	if new_value == turns.size():
+	if new_value >= turns.size():
+		current_turn = turns.size()
 		_on_out_of_turns()
 	else:
-		current_turn = clamp(new_value, TURNS_MIN, turns.size() - 1)
+		current_turn = max(new_value, TURNS_MIN)
 		_apply_turn_effects()
+		_refresh_turn_info()
+		_refresh_action_info()
+		_refresh_next_turns()
 		
 	_refresh_turns_label()
 	_refresh_turns_progress_bar()
-	_refresh_turn_info()
-	_refresh_action_info()
-	_refresh_next_turns()
 
 
 func _set_pedal_enabled(new_value: bool) -> void:
@@ -311,13 +310,11 @@ func _refresh_next_turns() -> void:
 		var next_turn := current_turn + 1 + next_turn_difference
 
 		if next_turn >= turns.size():
-			next_turn_cards[next_turn_difference].title_text = ""
-			next_turn_cards[next_turn_difference].image_filename = ""
+			next_turn_cards[next_turn_difference].clear()
 		else:
 			next_turn_cards[next_turn_difference].title_text = TURN_TITLES[turns[next_turn]]
 			next_turn_cards[next_turn_difference].image_filename = TURN_IMAGES[turns[next_turn]]
-		
-		next_turn_cards[next_turn_difference].refresh()
+			next_turn_cards[next_turn_difference].refresh()
 
 
 func _refresh_selected_item_card() -> void:
