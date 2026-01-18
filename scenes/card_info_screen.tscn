@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_j36cb"]
 [ext_resource type="Script" uid="uid://bxvaeiieiw5mi" path="res://scripts/card_info_screen.gd" id="1_qgqy1"]
-[ext_resource type="Theme" uid="uid://djhjhws7mnh7r" path="res://resources/text_md.tres" id="3_qfejm"]
+[ext_resource type="Texture2D" uid="uid://bo53rmen2r550" path="res://resources/background-texture.svg" id="3_vcjfw"]
 [ext_resource type="Texture2D" uid="uid://bl3233l58tgod" path="res://resources/cancel.svg" id="5_3ww0p"]
 
 [node name="CardInfoScreen" type="PanelContainer"]
@@ -14,6 +14,12 @@ grow_vertical = 2
 theme = ExtResource("1_j36cb")
 theme_type_variation = &"Background"
 script = ExtResource("1_qgqy1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.105882354)
+layout_mode = 2
+texture = ExtResource("3_vcjfw")
+stretch_mode = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -38,7 +44,6 @@ custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-theme = ExtResource("3_qfejm")
 theme_type_variation = &"ButtonYellow"
 
 [node name="Control" type="Control" parent="MarginContainer/CloseButton"]

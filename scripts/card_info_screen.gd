@@ -27,10 +27,10 @@ const TURN_IMAGES: Dictionary[Turn, String] = {
 }
 
 const TURN_DESCRIPTIONS : Dictionary[Turn, String] = {
-	Turn.CLEAR: "BOOST = normal distance.\nPEDAL = normal distance.",
-	Turn.ICE: "BOOST = 0 distance (slip).\nPEDAL = normal distance.",
-	Turn.HILL: "PEDAL = half distance.\nBOOST = normal.",
-	Turn.TOURIST: "PEDAL = 0 distance.\nBOOST = normal."
+	Turn.CLEAR: "Nothing blocking your path - just you, your battery, and the distance ahead.",
+	Turn.ICE: "Ice patches force you to slow down. If you try to BOOST through ice, you'll slip and skid without moving this turn.",
+	Turn.HILL: "Steep inclines demand power. BOOSTing works normally, but if you try to PEDAL, you'll barely crawl forward.",
+	Turn.TOURIST: "Oblivious pedestrians blocking your path. If you PEDAL, you'll have to stop completely - wasting your turn."
 }
 
 const ITEM_TITLES: Dictionary[Item, String] = {
@@ -40,9 +40,9 @@ const ITEM_TITLES: Dictionary[Item, String] = {
 }
 
 const ITEM_DESCRIPTIONS: Dictionary[Item, String] = {
-	Item.HAIR_DRYER: "ICE: BOOST works normally",
-	Item.FIRE_ALARM: "TOURIST: PEDAL works normally",
-	Item.BLENDER_MOTOR: "HILL: PEDAL works normally"
+	Item.HAIR_DRYER: "Hair dryer's heat melts through ICE patches, letting you BOOST straight through them at full speed.",
+	Item.FIRE_ALARM: "Alarm's piercing shriek scares pedestrians out of your way. You do not have to stop if you choose to PEDAL.",
+	Item.BLENDER_MOTOR: "The blender motor's industrial torque powers through inclines effortlessly. PEDAL through hills at full distance."
 }
 
 const ITEM_IMAGES: Dictionary[Item, String] = {
@@ -73,7 +73,7 @@ func _create_cards() -> void:
 func _assign_card(index: int, title_text: String, description_text: String, image_filename: String) -> void:
 	var container: HBoxContainer = cards_grid.get_child(index).get_child(0)
 	var card: Card = container.get_child(0)
-	var description: Label = container.get_child(1)
+	var description: Label = container.get_child(1).get_child(0)
 	card.title_text = title_text
 	card.image_filename = image_filename
 	card.refresh()

@@ -1,14 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://2xi5ammjlwcd"]
+[gd_scene load_steps=7 format=3 uid="uid://2xi5ammjlwcd"]
 
 [ext_resource type="Script" uid="uid://c3fbl0kvvfx1r" path="res://scripts/card.gd" id="1_6u4wf"]
 [ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_ktuci"]
 [ext_resource type="Texture2D" uid="uid://d01c6u1rn7nc1" path="res://resources/trail.svg" id="3_ktuci"]
+[ext_resource type="FontFile" uid="uid://dtojrvg8a7wie" path="res://resources/CalSans-Regular.ttf" id="4_kg30u"]
 
 [sub_resource type="FontVariation" id="FontVariation_ktuci"]
+base_font = ExtResource("4_kg30u")
 
 [sub_resource type="LabelSettings" id="LabelSettings_kg30u"]
-line_spacing = -4.0
+line_spacing = -7.0
 font = SubResource("FontVariation_ktuci")
+font_size = 18
 font_color = Color(0.98039216, 0.88235295, 0.7294118, 1)
 
 [node name="Card" type="PanelContainer"]
@@ -70,7 +73,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 mouse_filter = 1
-theme_type_variation = &"LabelLight"
 text = "CLEAR road"
 label_settings = SubResource("LabelSettings_kg30u")
 horizontal_alignment = 1

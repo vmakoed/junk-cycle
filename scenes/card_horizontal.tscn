@@ -16,11 +16,17 @@ theme_override_constants/separation = 24
 [node name="Card" parent="HBoxContainer" instance=ExtResource("3_acl7d")]
 layout_mode = 2
 
-[node name="Description" type="Label" parent="HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 24
+
+[node name="Description" type="Label" parent="HBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(288, 0)
 layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"LabelLight"
-text = "Card description goes here"
+theme_override_font_sizes/font_size = 20
+text = "Ice patches force you to slow down. If you try to BOOST through ice, you'll slip and skid without moving this turn. PEDAL to move safely."
 vertical_alignment = 1
+autowrap_mode = 3
 autowrap_trim_flags = 128

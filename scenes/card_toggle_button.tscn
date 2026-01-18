@@ -5,23 +5,31 @@
 [ext_resource type="PackedScene" uid="uid://cc4ds6l5vfo8t" path="res://scenes/card_medium.tscn" id="2_du7xk"]
 
 [node name="CardToggleButton" type="Button"]
-custom_minimum_size = Vector2(168, 300)
+custom_minimum_size = Vector2(174, 306)
 offset_right = 168.0
 offset_bottom = 240.0
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 0
 theme = ExtResource("1_5rc6b")
-theme_type_variation = &"ButtonTransparent"
+theme_type_variation = &"CardToggleButton"
 toggle_mode = true
 script = ExtResource("1_du7xk")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 unique_name_in_owner = true
-layout_mode = 0
-offset_right = 168.0
-offset_bottom = 300.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -150.0
+offset_right = 84.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 1
-theme_type_variation = &"CurrentTurnPanel"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -33,6 +41,7 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"LabelLight"
+theme_override_font_sizes/font_size = 24
 text = "selected"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -6,8 +6,8 @@ const BATTERY_LABEL_TEXT = "{current_battery}%"
 const TURNS_LABEL_TEXT = "{turns_left}/{total_turns}"
 const ACTION_INFO_DISTANCE_TEXT = "+{distance_change}m."
 const ACTION_INFO_BATTERY_TEXT = "-{battery_change}% batt."
-const WIN_TEXT = "You win!"
-const GAME_OVER_TEXT = "Game over"
+const WIN_TEXT = "You Win!"
+const GAME_OVER_TEXT = "Game Over"
 
 
 const DISTANCE_MIN = 0
@@ -116,10 +116,10 @@ var turns : Array[Turn] = [
 ]
 
 
-@onready var game_start_container: PanelContainer = %GameStartContainer
-@onready var item_selection_container: PanelContainer = %ItemSelectionContainer
+@onready var game_start_container: Control = %GameStartContainer
+@onready var item_selection_container: Control = %ItemSelectionContainer
 @onready var level_container: Control = %LevelContainer
-@onready var game_end_container: PanelContainer = %GameEndContainer
+@onready var game_end_container: Control = %GameEndContainer
 @onready var card_info_screen: CardInfoScreen = %CardInfoScreen
 
 @onready var items_container: BoxContainer = %ItemsContainer
@@ -391,6 +391,7 @@ func _on_goal_reached() -> void:
 func _on_final_turn_played() -> void:
 	pedal_enabled = false
 	boost_enabled = false
+	level_container.hide()
 	game_end_container.show()
 	
  

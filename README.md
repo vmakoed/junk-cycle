@@ -14,3 +14,7 @@ https://game-icons.net/
 https://freesound.org/
 
 - [Eelke](https://freesound.org/people/Eelke/)
+- [musicradiocreative](https://freesound.org/people/musicradiocreative/)
+- [gecop](https://freesound.org/people/gecop/)
+- [nickmaysoundmusic](https://freesound.org/people/nickmaysoundmusic/)
+- [giddster](https://freesound.org/people/giddster/)

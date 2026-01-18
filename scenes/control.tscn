@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://30141sjskvlp"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(648, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -324.0
+offset_top = -50.5
+offset_right = 324.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 24
+text = "Junk Cycle is a turn-based resource management game where you navigate through the city with a bike cobbled together from household junk. Your goal is to reach your destination within the move limit by managing your battery carefully and choosing when to boost versus pedal."
+autowrap_mode = 3
