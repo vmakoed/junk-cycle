@@ -11,7 +11,7 @@ const GAME_OVER_TEXT = "Game Over"
 
 
 const DISTANCE_MIN = 0
-const DISTANCE_GOAL = 1500
+const DISTANCE_GOAL = 1450
 const BATTERY_MAX = 100
 const BATTERY_MIN = 0
 const TURNS_MIN = 0
