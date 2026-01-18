@@ -34,7 +34,7 @@ const TURN_DESCRIPTIONS : Dictionary[Turn, String] = {
 	Turn.CLEAR: "Nothing blocking your path. BOOST and PEDAL at normal distance.",
 	Turn.ICE: "Ice patches force you to slow down. BOOST = 0 distance (slip).",
 	Turn.HILL: "Steep inclines demand power. PEDAL = half distance.",
-	Turn.TOURIST: "Pedestrian blocking you! If you PEDAL, you'll have to fully stop (0 distance)."
+	Turn.TOURIST: "Pedestrian approaching! If you PEDAL, you'll have to fully stop (0 distance)."
 }
 
 const TURN_IMAGES: Dictionary[Turn, String] = {

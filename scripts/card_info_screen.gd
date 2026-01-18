@@ -30,7 +30,7 @@ const TURN_DESCRIPTIONS : Dictionary[Turn, String] = {
 	Turn.CLEAR: "Nothing blocking your path - just you, your battery, and the distance ahead.",
 	Turn.ICE: "Ice patches force you to slow down. If you try to BOOST through ice, you'll slip and skid without moving this turn.",
 	Turn.HILL: "Steep inclines demand power. BOOSTing works normally, but if you try to PEDAL, you'll barely crawl forward.",
-	Turn.TOURIST: "Oblivious pedestrians blocking your path. If you PEDAL, you'll have to stop completely - wasting your turn."
+	Turn.TOURIST: "Oblivious pedestrians approaching! If you PEDAL, you'll have to stop completely - wasting your turn. BOOST before it's too late."
 }
 
 const ITEM_TITLES: Dictionary[Item, String] = {
