@@ -41,6 +41,7 @@ func _on_page_up_button_pressed() -> void:
 func _on_close_button_pressed() -> void:
 	close_button_pressed.emit()
 
+
 func _on_ui_button_pressed() -> void:
 	ui_button_pressed.emit()
 
