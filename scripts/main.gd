@@ -32,7 +32,7 @@ const TURN_TITLES : Dictionary[Turn, String] = {
 
 const TURN_DESCRIPTIONS : Dictionary[Turn, String] = {
 	Turn.CLEAR: "BOOST = normal distance. PEDAL = normal distance.",
-	Turn.ICE: "BOOST = 0 distance (slip). PEDAL = normal distance.",
+	Turn.ICE: "BOOST = 0 distance. PEDAL = normal distance.",
 	Turn.HILL: "PEDAL = half distance. BOOST = normal.",
 	Turn.TOURIST: "PEDAL = 0 distance. BOOST = normal."
 }
@@ -121,6 +121,7 @@ var turns : Array[Turn] = [
 @onready var level_container: Control = %LevelContainer
 @onready var game_end_container: Control = %GameEndContainer
 @onready var card_info_screen: CardInfoScreen = %CardInfoScreen
+@onready var tutorial_screen: TutorialScreen = %TutorialScreen
 
 @onready var items_container: BoxContainer = %ItemsContainer
 @onready var item_confirmed_button: Button = %ItemConfirmedButton
@@ -448,3 +449,11 @@ func _on_descriptions_button_pressed() -> void:
 
 func _on_card_info_screen_close_button_pressed() -> void:
 	card_info_screen.hide()
+
+
+func _on_tutorial_button_pressed() -> void:
+	tutorial_screen.show()
+
+
+func _on_tutorial_screen_close_button_pressed() -> void:
+	tutorial_screen.hide()

@@ -1,0 +1,555 @@
+[gd_scene load_steps=7 format=3 uid="uid://lf0lgcrfalgk"]
+
+[ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="1_2xfp7"]
+[ext_resource type="Texture2D" uid="uid://bo53rmen2r550" path="res://resources/background-texture.svg" id="2_6iv2e"]
+[ext_resource type="Script" uid="uid://bdwp8sa2b042g" path="res://scripts/tutorial_screen.gd" id="2_6t5s3"]
+[ext_resource type="Texture2D" uid="uid://bl3233l58tgod" path="res://resources/cancel.svg" id="3_6t5s3"]
+[ext_resource type="PackedScene" uid="uid://cc4ds6l5vfo8t" path="res://scenes/card_medium.tscn" id="4_6iv2e"]
+[ext_resource type="Texture2D" uid="uid://pl7gy1eu85ga" path="res://resources/help.svg" id="6_owd46"]
+
+[node name="TutorialScreen" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2xfp7")
+theme_type_variation = &"Background"
+script = ExtResource("2_6t5s3")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.105882354)
+layout_mode = 2
+texture = ExtResource("2_6iv2e")
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="CloseButton" type="Button" parent="MarginContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_type_variation = &"ButtonYellow"
+
+[node name="Control" type="Control" parent="MarginContainer/CloseButton"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/CloseButton/Control"]
+modulate = Color(0.25882354, 0.27058825, 0.3372549, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_6t5s3")
+expand_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(960, 456)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"ResourcesPanel"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_type_variation = &"LabelDark"
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Pages" type="Control" parent="MarginContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Page1" type="Control" parent="MarginContainer/PanelContainer/MarginContainer/Pages"]
+visible = false
+custom_minimum_size = Vector2(912, 312)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page1"]
+custom_minimum_size = Vector2(912, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -456.0
+offset_top = -101.0
+offset_right = 456.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 32
+text = "Junk Cycle is a turn-based resource management game where you navigate through the city with a bike cobbled together from household junk. Your goal is to reach your destination within the move limit by managing your battery carefully and choosing when to boost versus pedal."
+autowrap_mode = 2
+
+[node name="Page2" type="Control" parent="MarginContainer/PanelContainer/MarginContainer/Pages"]
+visible = false
+custom_minimum_size = Vector2(912, 312)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer"]
+custom_minimum_size = Vector2(666, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 32
+text = "Your goal is to reach the target DISTANCE in a limited number of MOVES by selecting PEDAL or BOOST. BOOST lets you cover more DISTANCE per MOVE, but it depletes your BATTERY. Once your BATTERY is empty, you cannot use BOOST anymore.
+Once you are out of MOVES, it is game over!"
+autowrap_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 24
+
+[node name="DistancePanel" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_type_variation = &"DarkPanelSharp"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/DistancePanel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/DistancePanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_type_variation = &"LabelLight"
+text = "Distance"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DistanceProgressBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/DistancePanel/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"DistanceProgress"
+value = 50.0
+show_percentage = false
+
+[node name="DistanceLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/DistancePanel/VBoxContainer/DistanceProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -11.5
+offset_right = 34.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LabelDark"
+text = "500/1000m"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+
+[node name="TurnsPanel" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(96, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"DarkPanelSharp"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/TurnsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/TurnsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_type_variation = &"LabelLight"
+text = "Moves"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnsProgressBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/TurnsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"MoveProgress"
+value = 50.0
+show_percentage = false
+
+[node name="TurnsLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/TurnsPanel/VBoxContainer/TurnsProgressBar"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LabelDark"
+text = "10/20"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="BatteryPanel" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(96, 60)
+layout_mode = 2
+theme_type_variation = &"DarkPanelSharp"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/BatteryPanel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/BatteryPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"LabelLight"
+text = "Battery"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BatteryProgressBar" type="ProgressBar" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/BatteryPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_type_variation = &"BatteryProgress"
+value = 50.0
+show_percentage = false
+
+[node name="BatteryLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer2/BatteryPanel/VBoxContainer/BatteryProgressBar"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LabelDark"
+text = "50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_trim_flags = 128
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 12
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"ButtonPanel"
+
+[node name="PedalContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="DistanceLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/PedalContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"LabelLight"
+text = "+50m"
+horizontal_alignment = 1
+
+[node name="BatteryLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/PedalContainer"]
+layout_mode = 2
+theme_type_variation = &"LabelLight"
+text = "-0% batt."
+horizontal_alignment = 1
+
+[node name="PedalButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/PedalContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"ButtonYellow"
+disabled = true
+text = "PEDAL"
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_type_variation = &"ButtonPanel"
+
+[node name="BoostContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="DistanceLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/BoostContainer"]
+layout_mode = 2
+theme_type_variation = &"LabelLight"
+text = "+100m"
+horizontal_alignment = 1
+
+[node name="BatteryLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/BoostContainer"]
+layout_mode = 2
+theme_type_variation = &"LabelLight"
+text = "-10% batt."
+horizontal_alignment = 1
+
+[node name="BoostButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page2/HBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/BoostContainer"]
+z_index = 1
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"ButtonYellow"
+disabled = true
+text = "BOOST"
+
+[node name="Page3" type="Control" parent="MarginContainer/PanelContainer/MarginContainer/Pages"]
+visible = false
+custom_minimum_size = Vector2(912, 312)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page3/HBoxContainer"]
+custom_minimum_size = Vector2(666, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 32
+text = "Along the way, you will encounter obstacles that affect the behaviour of PEDAL and BOOST. If you do not manage your resources carefully, you might end up wasting the MOVE without gaining DISTANCE. The game displays obstacles for the next 3 turns. Use this information to plan ahead!"
+autowrap_mode = 2
+
+[node name="CurrentTurnPanel" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page3/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_type_variation = &"CurrentTurnPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page3/HBoxContainer/CurrentTurnPanel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="CurrentTurnCard" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page3/HBoxContainer/CurrentTurnPanel/VBoxContainer" instance=ExtResource("4_6iv2e")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+title_text = "ICE"
+image_filename = "snowflake-2"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page3/HBoxContainer/CurrentTurnPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CurrentTurnDescription" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page3/HBoxContainer/CurrentTurnPanel/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+theme_type_variation = &"LabelLight"
+text = "BOOST = 0 distance. PEDAL = normal distance."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Page4" type="Control" parent="MarginContainer/PanelContainer/MarginContainer/Pages"]
+visible = false
+custom_minimum_size = Vector2(912, 312)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer"]
+custom_minimum_size = Vector2(666, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_type_variation = &"LabelDark"
+theme_override_font_sizes/font_size = 32
+text = "At the start of the game, you will select a piece of junk to attach to your bike. The selected item will change how certain obstacles affect your PEDAL and BOOST. Use the \"?\" button to check the full list of obstacles and items.
+
+Good luck!"
+autowrap_mode = 2
+
+[node name="CurrentTurnPanel" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_type_variation = &"CurrentTurnPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/CurrentTurnPanel"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="CurrentTurnCard" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/CurrentTurnPanel/VBoxContainer" instance=ExtResource("4_6iv2e")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+title_text = "HAIR DRYER"
+image_filename = "computer-fan"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/CurrentTurnPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CurrentTurnDescription" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/CurrentTurnPanel/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+theme_type_variation = &"LabelLight"
+text = "Melt ICE patches to  BOOST through them at full speed."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="DescriptionsButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_type_variation = &"ButtonYellow"
+expand_icon = true
+
+[node name="Control" type="Control" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/DescriptionsButton"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/DescriptionsButton/Control"]
+modulate = Color(0.25882354, 0.27058825, 0.3372549, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_owd46")
+expand_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 12
+
+[node name="PageDownButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_type_variation = &"ButtonYellow"
+disabled = true
+text = "BACK"
+
+[node name="PageUpButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_type_variation = &"ButtonYellow"
+disabled = true
+text = "NEXT"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[connection signal="pressed" from="MarginContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="MarginContainer/CloseButton" to="." method="_on_ui_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/DescriptionsButton" to="." method="_on_descriptions_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/Pages/Page4/HBoxContainer/DescriptionsButton" to="." method="_on_ui_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/PageDownButton" to="." method="_on_page_down_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/PageDownButton" to="." method="_on_ui_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/PageUpButton" to="." method="_on_page_up_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/PageUpButton" to="." method="_on_ui_button_pressed"]

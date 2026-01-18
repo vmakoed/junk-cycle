@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://duqbpuyr7odl0"]
+[gd_scene load_steps=16 format=3 uid="uid://duqbpuyr7odl0"]
 
 [ext_resource type="Script" uid="uid://ypvni8lhif4t" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Theme" uid="uid://gy415apsmw3w" path="res://resources/theme.tres" id="2_sugp2"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bo53rmen2r550" path="res://resources/background-texture.svg" id="8_a8y0u"]
 [ext_resource type="FontFile" uid="uid://bv0ajk0cqxdku" path="res://resources/Pacifico-Regular.ttf" id="8_trceg"]
 [ext_resource type="AudioStream" uid="uid://ju0vusv7i6ya" path="res://resources/gears.wav" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://lf0lgcrfalgk" path="res://scenes/tutorial_screen.tscn" id="11_jkv2x"]
 [ext_resource type="AudioStream" uid="uid://dbu24kcmydwof" path="res://resources/vacuum-cleaner.wav" id="11_ya4ey"]
 [ext_resource type="AudioStream" uid="uid://bl7sjda285io5" path="res://resources/ebike-horn.wav" id="12_eb6dy"]
 [ext_resource type="AudioStream" uid="uid://bfjecc5bnrmgl" path="res://resources/juicer.wav" id="13_trceg"]
@@ -164,6 +165,7 @@ uppercase = true
 
 [node name="LevelContainer" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="LevelContainer"]
@@ -644,7 +646,6 @@ stream = ExtResource("7_85g3d")
 
 [node name="GameStartContainer" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_type_variation = &"Background"
 
@@ -652,13 +653,13 @@ theme_type_variation = &"Background"
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
-theme_override_constants/margin_top = 192
+theme_override_constants/margin_top = 120
 theme_override_constants/margin_bottom = 72
 
-[node name="VBoxContainer" type="Control" parent="GameStartContainer/MarginContainer"]
+[node name="Control" type="Control" parent="GameStartContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="GameTitle" type="Label" parent="GameStartContainer/MarginContainer/VBoxContainer"]
+[node name="GameTitle" type="Label" parent="GameStartContainer/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -674,24 +675,24 @@ theme_override_fonts/font = ExtResource("8_trceg")
 theme_override_font_sizes/font_size = 120
 text = "Junk Cycle"
 
-[node name="StartButton" type="Button" parent="GameStartContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(216, 96)
+[node name="VBoxContainer" type="VBoxContainer" parent="GameStartContainer/MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -108.0
-offset_top = -96.0
-offset_right = 108.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="StartButton" type="Button" parent="GameStartContainer/MarginContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(216, 96)
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_type_variation = &"ButtonLarge"
 
-[node name="Label" type="Label" parent="GameStartContainer/MarginContainer/VBoxContainer/StartButton"]
+[node name="Label" type="Label" parent="GameStartContainer/MarginContainer/Control/VBoxContainer/StartButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -706,6 +707,33 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_type_variation = &"LabelButtonLarge"
 text = "START"
+
+[node name="TutorialButton" type="Button" parent="GameStartContainer/MarginContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(216, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_type_variation = &"ButtonLarge"
+
+[node name="Label" type="Label" parent="GameStartContainer/MarginContainer/Control/VBoxContainer/TutorialButton"]
+custom_minimum_size = Vector2(216, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -11.5
+offset_right = 24.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"LabelButtonLarge"
+text = "TUTORIAL"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="GameEndContainer" type="Control" parent="."]
 unique_name_in_owner = true
@@ -786,10 +814,16 @@ theme_type_variation = &"LabelButtonLarge"
 text = "quit"
 uppercase = true
 
-[node name="CardInfoScreen" parent="." instance=ExtResource("6_tefeu")]
+[node name="TutorialScreen" parent="." instance=ExtResource("11_jkv2x")]
 unique_name_in_owner = true
 visible = false
 z_index = 2
+layout_mode = 2
+
+[node name="CardInfoScreen" parent="." instance=ExtResource("6_tefeu")]
+unique_name_in_owner = true
+visible = false
+z_index = 3
 layout_mode = 2
 
 [node name="Audio" type="Node" parent="."]
@@ -818,11 +852,16 @@ stream = ExtResource("13_trceg")
 [connection signal="pressed" from="LevelContainer/PanelContainer2/MarginContainer/HBoxContainer/DescriptionsButton" to="." method="_on_ui_button_pressed"]
 [connection signal="pressed" from="LevelContainer/MarginContainer3/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/PanelContainer/PedalContainer/PedalButton" to="." method="_on_pedal_button_pressed"]
 [connection signal="pressed" from="LevelContainer/MarginContainer3/HBoxContainer/PanelContainer3/MarginContainer/VBoxContainer/PanelContainer/BoostContainer/BoostButton" to="." method="_on_boost_button_pressed"]
-[connection signal="pressed" from="GameStartContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="GameStartContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_ui_button_pressed"]
+[connection signal="pressed" from="GameStartContainer/MarginContainer/Control/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="GameStartContainer/MarginContainer/Control/VBoxContainer/StartButton" to="." method="_on_ui_button_pressed"]
+[connection signal="pressed" from="GameStartContainer/MarginContainer/Control/VBoxContainer/TutorialButton" to="." method="_on_ui_button_pressed"]
+[connection signal="pressed" from="GameStartContainer/MarginContainer/Control/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/VBoxContainer/RestartButton" to="." method="_on_ui_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="GameEndContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_ui_button_pressed"]
+[connection signal="close_button_pressed" from="TutorialScreen" to="." method="_on_tutorial_screen_close_button_pressed"]
+[connection signal="descriptions_button_pressed" from="TutorialScreen" to="." method="_on_descriptions_button_pressed"]
+[connection signal="ui_button_pressed" from="TutorialScreen" to="." method="_on_ui_button_pressed"]
 [connection signal="close_button_pressed" from="CardInfoScreen" to="." method="_on_card_info_screen_close_button_pressed"]
 [connection signal="close_button_pressed" from="CardInfoScreen" to="." method="_on_ui_button_pressed"]
